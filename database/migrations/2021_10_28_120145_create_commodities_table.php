@@ -18,7 +18,7 @@ class CreateCommoditiesTable extends Migration
             $table->foreignId('category_id');
             $table->string('name');
             $table->string('slug');
-            $table->boolean('is_active');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories');
