@@ -49,10 +49,10 @@
                             <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <div class="dropdown-title">Logged as {{ Auth::user()->name }}</div>
-                            {{-- <a href="{{ route() }}" class="dropdown-item has-icon">
+                            <div class="dropdown-title">Login sebagai {{ Auth::user()->name }}</div>
+                            <a href="{{ route('backend.users.profiles.index') }}" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profile
-                            </a> --}}
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i> Logout

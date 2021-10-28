@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Frontend\CommunityDashboardController;
 
@@ -14,7 +16,7 @@ use App\Http\Controllers\Frontend\CommunityDashboardController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['register' => false]);
+Auth::routes(['register' => false, 'password.*' => false]);
 
 Route::group(['as' => 'front.'], function() {
     Route::get('/', function () {
@@ -28,4 +30,12 @@ Route::group(['as' => 'front.'], function() {
 
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 'role:bod|webmaster|admin']], function() {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    Route::group(['prefix' => '/users/profiles', 'as' => 'users.profiles.'], function () {
+        Route::get('/', [ProfileController::class, 'index'])->name('index');
+        Route::put('/email', [ProfileController::class, 'updateEmail'])->name('update.email');
+        Route::put('/password', [ProfileController::class, 'updatePassword'])->name('update.password');
+        Route::put('/', [ProfileController::class, 'updateProfile'])->name('update.profile');
+    });
+    Route::resource('users', UserController::class)->parameters(['users' => 'id'])->except(['show']);
 });
