@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Frontend\CommunityDashboardController;
 
 /*
@@ -38,4 +39,16 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
         Route::put('/', [ProfileController::class, 'updateProfile'])->name('update.profile');
     });
     Route::resource('users', UserController::class)->parameters(['users' => 'id'])->except(['show']);
+    // Communities
+    Route::group(['prefix' => '/communities', 'as' => 'communities.'], function () {
+        // FrontEnd
+        Route::get('/', [CommunityController::class, 'index'])->name('index');
+        Route::get('/create', [CommunityController::class, 'renderCreateView'])->name('createView');
+        Route::get('/{id}/edit', [CommunityController::class, 'renderEditView'])->name('editView');
+
+        // Backend
+        Route::post('/store', [CommunityController::class, 'store'])->name('store');
+        Route::put('/{id}/edit', [CommunityController::class, 'edit'])->name('edit');
+        Route::delete('/{id}/delete', [CommunityController::class, 'delete'])->name('delete');
+    });
 });
