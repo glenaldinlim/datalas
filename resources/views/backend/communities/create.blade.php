@@ -37,9 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contact" class="form-label label-font">Nama Kontak</label>
-                                <input type="text" name="contact" id="contact"
-                                    class="form-control @error('contact') is-invalid @enderror" value="{{ old('contact') }}"
-                                    placeholder="Nama Kontak" required>
+                                <input type="text" name="contact" id="contact" class="form-control @error('contact') is-invalid @enderror" value="{{ old('contact') }}" placeholder="Nama Kontak" required>
                                 @error('contact')
                                     <div class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('contact') }}</strong>
@@ -60,8 +58,8 @@
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="province" class="form-label label-font">Provinsi</label>
-                                <select class="form-control" name="province" id="province">
-                                    <option selected value="" disabled>-- Pilih Provinsi --</option>
+                                <select class="form-control @error('province') is-invalid @enderror" name="province" id="province">
+                                    <option selected disabled>-- Pilih Provinsi --</option>
                                     @foreach ($provinces as $province)
                                         <option value="{{ $province['id'] }}">{{ $province['nama'] }}</option>
                                     @endforeach
@@ -133,7 +131,6 @@
                             elementOrigin.innerHTML += `
                 <option value="${origin.id}">${origin.nama}</option>
             `;
-
                             resolve();
                         });
                     })
@@ -141,13 +138,11 @@
                         reject(err);
                     })
             })
-
             return setOption;
         }
         elementSelectProvince.addEventListener('change', (event) => {
             const value = event.target.value;
             showDistrict(value);
-
             return;
         });
         const resetEditDistrict = async () => {
@@ -170,6 +165,5 @@
                 }
             }, 100);
         });
-
     </script>
 @endpush

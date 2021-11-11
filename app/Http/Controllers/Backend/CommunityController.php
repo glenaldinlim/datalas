@@ -37,74 +37,45 @@ class CommunityController extends Controller
         return json_decode($response->getBody(), true)['provinsi'];
     }
 
-    public function delete($id)
+    public function index()
     {
-        $community = Community::findOrFail($id);
-        try {
-            $community->delete();
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        $communities = Community::join('users', 'users.id', 'communities.user_id')
+            ->select([
+                'communities.*'
+            ])
+            ->get();
 
-        return redirect()->route('backend.communities.index')->with('success', 'Berhasil Menghapus Komunitas ' . $community->name . '!');
-    }
-
-    public function edit(Request $request, $id)
-    {
-        $community = Community::findOrFail($id);
-        $validation = \Validator::make($request->all(), [
-            'community_name' => 'required|max:100',
-            'slug' => 'required',
-            'contact' => 'required',
-            'contact_phone' => 'required',
-            'province' => 'required',
-            'origin' => 'required',
-            'address' => 'required',
-            'is_active' => 'required'
-        ])->validate();
-
-        $data = [
-            'user_id' => $request->user,
-            'name' => $request->community_name,
-            'slug' => $request->slug,
-            'province_id' => $request->province,
-            'origin_id' => $request->origin,
-            'address' => $request->address,
-            'contact_name' => $request->contact,
-            'contact_phone' => $request->contact_phone,
-            'is_active' => $request->is_active,
-        ];
-
-        try {
-            $community->update($data);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-
-        return redirect()->route('backend.communities.index')->with('success', 'Berhasil mengubah Komunitas ' . $request->community_name . '!');
-    }
-
-    public function renderEditView($id)
-    {
-        $communityData = Community::findOrFail($id);
-        $provinces =  $this->getProvince();
-        $users = User::all();
-        $districts = $this->getDistrict($communityData->province_id);
-
-        return view('backend.communities.edit', [
-            'communityData' => $communityData,
-            'users' => $users,
-            'provinces' => $provinces,
-            'districts' => $districts,
-            'idCommunity' => $id
+        return view('backend.communities.index', [
+            'no' => 1,
+            'communities' => $communities
         ]);
     }
 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $provinces =  $this->getProvince();
+        $users = User::all();
+        return view('backend.communities.create', [
+            'users' => $users,
+            'provinces' => $provinces
+        ]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $validation = \Validator::make($request->all(), [
             'community_name' => 'required|max:100',
-            'slug' => 'required',
             'contact' => 'required',
             'contact_phone' => 'required',
             'province' => 'required',
@@ -132,27 +103,106 @@ class CommunityController extends Controller
         return redirect()->route('backend.communities.index')->with('success', 'Berhasil menambahkan Komunitas baru!');
     }
 
-    public function renderCreateView()
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
+        $communityData = Community::findOrFail($id);
         $provinces =  $this->getProvince();
         $users = User::all();
-        return view('backend.communities.create', [
+        $districts = $this->getDistrict($communityData->province_id);
+
+        return view('backend.communities.edit', [
+            'communityData' => $communityData,
             'users' => $users,
-            'provinces' => $provinces
+            'provinces' => $provinces,
+            'districts' => $districts,
+            'idCommunity' => $id
         ]);
     }
 
-    public function index()
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
     {
-        $communities = Community::join('users', 'users.id', 'communities.user_id')
-            ->select([
-                'communities.*'
-            ])
-            ->get();
+        $community = Community::findOrFail($id);
+        $validation = \Validator::make($request->all(), [
+            'community_name' => 'required|max:100',
+            'contact' => 'required',
+            'contact_phone' => 'required',
+            'province' => 'required',
+            'origin' => 'required',
+            'address' => 'required',
+            'is_active' => 'required'
+        ])->validate();
 
-        return view('backend.communities.index', [
-            'no' => 1,
-            'communities' => $communities
+        $data = [
+            'user_id' => $request->user,
+            'name' => $request->community_name,
+            'slug' =>\Str::slug($request->community_name, '-'),
+            'province_id' => $request->province,
+            'origin_id' => $request->origin,
+            'address' => $request->address,
+            'contact_name' => $request->contact,
+            'contact_phone' => $request->contact_phone,
+            'is_active' => $request->is_active,
+        ];
+
+        try {
+            $community->update($data);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return redirect()->route('backend.communities.index')->with('success', 'Berhasil mengubah Komunitas ' . $request->community_name . '!');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $communityData = Community::findOrFail($id);
+        $provinces =  $this->getProvince();
+        $users = User::all();
+        $districts = $this->getDistrict($communityData->province_id);
+
+        return view('backend.communities.edit', [
+            'communityData' => $communityData,
+            'users' => $users,
+            'provinces' => $provinces,
+            'districts' => $districts,
+            'idCommunity' => $id
         ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $community = Community::findOrFail($id);
+        try {
+            $community->delete();
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+
+        return redirect()->route('backend.communities.index')->with('success', 'Berhasil Menghapus Komunitas ' . $community->name . '!');
     }
 }

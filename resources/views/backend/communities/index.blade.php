@@ -13,7 +13,7 @@
                         <h4>List Komunitas</h4>
                         <div class="card-header-action">
                             @hasrole('webmaster')
-                            <a href="{{ route('backend.communities.createView') }}" class="btn btn-primary"><i
+                            <a href="{{ route('backend.communities.create') }}" class="btn btn-primary"><i
                                     class="fas fa-plus"></i></a>
                             @endhasrole
                         </div>
@@ -36,20 +36,20 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($communities as $communitie)
+                                    @foreach ($communities as $community)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $communitie->name }}</td>
-                                            <td>{{ $communitie->slug }}</td>
-                                            <td>{{ $communitie->province_id }}</td>
-                                            <td>{{ $communitie->origin_id }}</td>
-                                            <td>{{ $communitie->address }}</td>
-                                            <td>{{ $communitie->contact_name }}</td>
-                                            <td>{{ $communitie->contact_phone }}</td>
-                                            <td>{{ $communitie->is_active === 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td>{{ $community->name }}</td>
+                                            <td>{{ $community->slug }}</td>
+                                            <td>{{ $community->province_id }}</td>
+                                            <td>{{ $community->origin_id }}</td>
+                                            <td>{{ $community->address }}</td>
+                                            <td>{{ $community->contact_name }}</td>
+                                            <td>{{ $community->contact_phone }}</td>
+                                            <td>{{ $community->is_active === 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
                                             <td>
-                                                <a href="{{ route('backend.communities.editView', ['id' => $communitie->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('backend.communities.delete', ['id' => $communitie->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This Community?')">
+                                                <a href="{{ route('backend.communities.edit', ['id' => $community->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
+                                                <form action="{{ route('backend.communities.destroy', ['id' => $community->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This Community?')">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
