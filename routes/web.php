@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProfileController;
+use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PublicationController;
 use App\Http\Controllers\Frontend\CommunityDashboardController;
@@ -39,6 +40,8 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
         Route::put('/', [ProfileController::class, 'updateProfile'])->name('update.profile');
     });
     Route::resource('users', UserController::class)->parameters(['users' => 'id'])->except(['show']);
+    Route::resource('categories', CategoryController::class)->parameters(['categories' => 'id'])->except(['show']);
     Route::resource('communities', CommunityController::class)->parameters(['communities' => 'id'])->except(['show']);
     Route::resource('publications', PublicationController::class)->parameters(['publications' => 'id']);
+
 });
