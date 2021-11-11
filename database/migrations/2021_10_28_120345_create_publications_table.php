@@ -21,9 +21,9 @@ class CreatePublicationsTable extends Migration
             $table->string('slug');
             $table->longText('content');
             $table->string('cover');
-            $table->enum('published_status', ['Draft', 'Publish']);
-            $table->timestamp('published_at');
-            $table->foreignId('published_by');
+            $table->enum('published_status', ['Draft', 'Publish'])->default('Draft');
+            $table->timestamp('published_at')->nullable()->default(NULL);
+            $table->foreignId('published_by')->nullable()->default(NULL);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
