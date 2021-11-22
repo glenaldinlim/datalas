@@ -5,10 +5,11 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CommodityController;
+use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PublicationController;
-use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Frontend\ProfileUserController;
+use App\Http\Controllers\Frontend\CommunityDashboardController;
 
 /*
 |--------------------------------------------------------------------------
