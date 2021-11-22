@@ -7,7 +7,7 @@ use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\CommodityController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PublicationController;
-use App\Http\Controllers\Frontend\CommunityDashboardController;
+use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Frontend\ProfileUserController;
 
 /*
