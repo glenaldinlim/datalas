@@ -133,7 +133,7 @@ class UserController extends Controller
             $user = User::findOrFail($id);
             $user->delete();
 
-            return redirect()->route('admins.index')->with('success', 'Berhasil menghapus Administrator '.$user->name.'!');
+            return redirect()->route('backend.admins.index')->with('success', 'Berhasil menghapus Administrator '.$user->name.'!');
         }
 
         return abort(403);
