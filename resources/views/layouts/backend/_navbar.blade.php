@@ -6,7 +6,7 @@
     <li class="{{ (Request::segment(2) == 'users') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.users.index') }}"><i class="fas fa-user-lock"></i>&nbsp;<span>Pengurus</span></a></li>
 
     <li class="menu-header">Kelola Komoditas</li>
-    <li class="{{ (Request::segment(2) == 'category') ? 'active' : '' }}"><a class="nav-link " href="{{ route('backend.categories.index') }}"><i class="fas fa-tag"></i>&nbsp;<span>Kategori</span></a></li>
+    <li class="{{ (Request::segment(2) == 'categories') ? 'active' : '' }}"><a class="nav-link " href="{{ route('backend.categories.index') }}"><i class="fas fa-tag"></i>&nbsp;<span>Kategori</span></a></li>
     <li class="{{ (Request::segment(2) == 'commodities') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.commodities.index') }}"><i class="fas fa-seedling"></i>&nbsp;<span>Komoditas</span></a></li>
 
     <li class="menu-header">Kelola Rekan</li>
