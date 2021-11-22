@@ -18,4 +18,5 @@
     <li class="menu-header">Misc</li>
     <li class="{{ (Request::segment(3) == 'misc' && Request::segment(2) == 'contacts') ? 'active' : '' }}"><a class="nav-link" href="#"><i class="fas fa-inbox"></i>&nbsp;<span>Pesan Kontak</span></a></li>
     <li class="{{ (Request::segment(3) == 'misc' && Request::segment(2) == 'settings') ? 'active' : '' }}"><a class="nav-link" href="#"><i class="fas fa-cog"></i>&nbsp;<span>Pengaturan Website</span></a></li>
+    <li class="{{ (Request::segment(3) == 'misc' && Request::segment(2) == 'logs') ? 'active' : '' }}"><a class="nav-link" href="#"><i class="far fa-clipboard"></i>&nbsp;<span>Log Aktivitas</span></a></li>
 </ul>
