@@ -10,6 +10,17 @@ use App\Http\Controllers\Controller;
 class CommodityController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('role:webmaster|admin');
+        $this->middleware('auth')->except(['create', 'show', 'store', 'edit', 'update', 'destroy']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -19,14 +30,14 @@ class CommodityController extends Controller
         $commodities = Commodity::All();
 
         return view('backend.commodities.index', [
-            'no'    => 1,
-            'commodities' => $commodities,
+            'no'            => 1,
+            'commodities'   => $commodities,
         ]);
     }
 
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('is_active', 1)->get();
 
         return view('backend.commodities.create', [
             'categories' => $categories,
@@ -36,13 +47,14 @@ class CommodityController extends Controller
     public function store(Request $request)
     {
         $validation = \Validator::make($request->all(), [
-            'name'                 => 'required',
+            'category'          => 'required|numeric',
+            'commodity_name'    => 'required|max:200',
         ])->validate();
 
         $commodity = Commodity::create([
-            'category_id'          => $request->get('category'),
-            'name'                 => ucwords($request->get('name')),
-            'slug'                 => \Str::slug($request->get('name'), '-'),
+            'category_id'   => $request->get('category'),
+            'name'          => ucwords($request->get('commodity_name')),
+            'slug'          => \Str::slug($request->get('commodity_name'), '-'),
         ]);
 
         return redirect()->route('backend.commodities.index')->with('success', 'Berhasil menambahkan komoditas');
@@ -51,13 +63,13 @@ class CommodityController extends Controller
 
     public function show($id)
     {
-        //
+        return abort(404);
     }
 
     public function edit($id)
     {
         $commodity = Commodity::findOrFail($id);
-        $categories = Category::all();
+        $categories = Category::where('is_active', 1)->get();
 
         return view('backend.commodities.edit', [
             'commodity'  => $commodity,
@@ -68,15 +80,16 @@ class CommodityController extends Controller
     public function update(Request $request, $id)
     {
         $validation = \Validator::make($request->all(), [
-            'name'          => 'required',
-            'is_active'     => 'required',
+            'category'          => 'required|numeric',
+            'commodity_name'    => 'required|max:200',
+            'status_option'     => 'required|boolean',
         ])->validate();
 
         Commodity::where('id', $id)->update([
             'category_id'   => $request->get('category'),
-            'name'          => $request->get('name'),
-            'slug'          => \Str::slug($request->get('name'), '-'),
-            'is_active'     => $request->get('is_active'),
+            'name'          => $request->get('commodity_name'),
+            'slug'          => \Str::slug($request->get('commodity_name'), '-'),
+            'is_active'     => $request->get('status_option'),
         ]);
 
         return redirect()->route('backend.commodities.index')->with('success', 'Berhasil mengubah status komoditas !');
@@ -84,10 +97,13 @@ class CommodityController extends Controller
 
     public function destroy($id)
     {
-        $commodity = Commodity::findOrFail($id);
-        $commodity->delete();
+        try {
+            $commodity = Commodity::findOrFail($id);
+            $commodity->delete();
 
-
-        return redirect()->route('backend.commodities.index')->with('success', 'Berhasil Menghapus Komoditas ' . $commodity->name . '!');
+            return redirect()->route('backend.commodities.index')->with('success', 'Berhasil Menghapus Komoditas ' . $commodity->name . '!');
+        } catch (\Illuminate\Database\QueryException $err) {
+            return redirect()->route('backend.commodities.index')->with('danger','Komoditas gagal dihapus. Code: SQLSTATE['.$err->getCode().']');
+        }
     }
 }

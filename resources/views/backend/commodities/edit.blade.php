@@ -13,10 +13,10 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="category-select" class="form-label label-font">Kategori</label>
-                                <select class="form-control" name="category" id="category-select">
+                                <label for="category" class="form-label label-font">Kategori</label>
+                                <select class="form-control @error('category') is-invalid @enderror selectric" id="category" name="category">
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}" {{ $commodity->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}" {{ $category->id == $commodity->category_id ? 'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                                 @error('category')
@@ -26,29 +26,30 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="name" class="form-label label-font">Nama</label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name')  ?? $commodity->name }}" placeholder="Nama" required>
-                                @error('name')
+                                <label for="commodity_name" class="form-label label-font">Nama Komoditas</label>
+                                <input type="text" name="commodity_name" id="commodity_name" class="form-control @error('commodity_name') is-invalid @enderror" value="{{ old('commodity_name') ?? $commodity->name }}" placeholder="Nama Komoditas" required>
+                                @error('commodity_name')
                                     <div class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('commodity_name') }}</strong>
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="is_active" class="d-block">Active</label>
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="is_active" id="is_active" {{ $commodity->is_active == '1' ? 'checked' : ''}} value="1">
-                                  <label class="form-check-label" for="is_active">
-                                    Aktif
-                                  </label>
+                                <label class="form-label label-font d-block">Status</label>
+                                <div class="form-check form-check-inline">
+                                    <input name="status_option" class="form-check-input @error('status_option') is-invalid @enderror" type="radio" id="status_active" value="1" {{ $category->is_active == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_active">Aktif</label>
                                 </div>
-                                <div class="form-check">
-                                  <input class="form-check-input" type="radio" name="is_active" id="is_active" {{ $commodity->is_active == '0' ? 'checked' : ''}} value="0">
-                                  <label class="form-check-label" for="is_active">
-                                    Tidak Aktif
-                                  </label>
+                                <div class="form-check form-check-inline">
+                                    <input name="status_option" class="form-check-input @error('status_option') is-invalid @enderror" type="radio" id="status_inactive" value="0" {{ $category->is_active == 0 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_inactive">Tidak Aktif</label>
                                 </div>
-                              </div>
+                                @error('status_option')
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('status_option') }}</strong>
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

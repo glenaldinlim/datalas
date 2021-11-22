@@ -12,14 +12,12 @@
                     <div class="card-header">
                         <h4>List Komoditas</h4>
                         <div class="card-header-action">
-                            @hasrole('webmaster')
-                                <a href="{{ route('backend.commodities.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                            @endhasrole
+                            <a href="{{ route('backend.commodities.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="userslist">
+                            <table class="table table-striped" id="commodity-table">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -35,7 +33,7 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $commodity->category_id}}</td>
                                             <td>{{ $commodity->name }}</td>
-                                            <td>{{ $commodity->is_active === 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td><span class="badge {{ $commodity->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $commodity->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
                                                 <a href="{{ route('backend.commodities.edit', ['id' => $commodity->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
                                                 <form action="{{ route('backend.commodities.destroy', ['id' => $commodity->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This commodity?')">
@@ -58,9 +56,9 @@
 
 @push('js-additional')
     <script>
-        $("#userslist").dataTable({
+        $("#commodity-table").dataTable({
             "columnDefs": [
-                { "sortable": false, "targets": [3,5] }
+                { "sortable": false, "targets": [4] }
             ]
         });
     </script>
