@@ -48,7 +48,11 @@
                             {{-- <a href="{{ route() }}" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Akun
                             </a> --}}
-                            <div class="dropdown-divider"></div>
+                            {{-- <div class="dropdown-divider"></div> --}}
+                            <div class="dropdown-title">Login sebagai {{ Auth::user()->name }}</div>
+                            <a href="{{ route('frontend.users.profiles.index') }}" class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> Profile
+                            </a>
                             <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                 <i class="fas fa-sign-out-alt"></i> Keluar
                             </a>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Backend\CommodityController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\PublicationController;
 use App\Http\Controllers\Frontend\CommunityDashboardController;
+use App\Http\Controllers\Frontend\ProfileUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,4 +46,16 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('commodities', CommodityController::class )->parameters(['commodities' => 'id']);
     Route::resource('communities', CommunityController::class)->parameters(['communities' => 'id'])->except(['show']);
     Route::resource('publications', PublicationController::class)->parameters(['publications' => 'id']);
+});
+
+Route::group(['prefix' => 'community', 'as' => 'frontend.', 'middleware' => ['auth', 'role:community']], function() {
+    Route::get('/dashboard', [CommunityDashboardController::class, 'index'])->name('dashboard');
+
+    Route::group(['prefix' => '/users/profiles', 'as' => 'users.profiles.'], function () {
+        Route::get('/', [ProfileUserController::class, 'index'])->name('index');
+        Route::put('/email', [ProfileUserController::class, 'updateEmail'])->name('update.email');
+        Route::put('/password', [ProfileUserController::class, 'updatePassword'])->name('update.password');
+        Route::put('/', [ProfileUserController::class, 'updateProfile'])->name('update.profile');
+    });
+
 });
