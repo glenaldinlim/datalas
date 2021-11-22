@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Edit Kategori Komoditas</h1>
+            <h1>Ubah Kategori Komoditas</h1>
         </div>
         <form action="{{ route('backend.categories.update', ['id' => $category->id]) }}" method="post">
             @csrf
@@ -13,27 +13,30 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label label-font">Nama Kategori</label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $category->name) }}" placeholder="Nama Kategori" required>
-                                @error('name')
+                                <label for="category_name" class="form-label label-font">Nama Kategori</label>
+                                <input type="text" name="category_name" id="category_name" class="form-control @error('category_name') is-invalid @enderror" value="{{ old('category_name') ?? $category->name }}" placeholder="Nama Kategori" required>
+                                @error('category_name')
                                     <div class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('category_name') }}</strong>
                                     </div>
                                 @enderror
                             </div>
-                            <div class="form-check">
-                                <label for="name" class="form-label label-font d-block">Status</label>
-                                <input class="form-check-input" type="radio" value="1" name="status" id="status_active" {{ $category->is_active == 1 ? 'checked' : '' }}>
-                                <label class="form-check-label" for="status_active">
-                                  Aktif
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" value="0" name="status" id="status_inactive" {{ $category->is_active == 0 ? 'checked' : '' }}>
-                                <label class="form-check-label" for="status_inactive">
-                                  Tidak Aktif
-                                </label>
-                              </div>
+                            <div class="form-group">
+                                <label class="form-label label-font d-block">Status</label>
+                                <div class="form-check form-check-inline">
+                                    <input name="status_option" class="form-check-input @error('status_option') is-invalid @enderror" type="radio" id="status_active" value="1" {{ $category->is_active == 1 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_active">Aktif</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input name="status_option" class="form-check-input @error('status_option') is-invalid @enderror" type="radio" id="status_inactive" value="0" {{ $category->is_active == 0 ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="status_inactive">Tidak Aktif</label>
+                                </div>
+                                @error('status_option')
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('status_option') }}</strong>
+                                    </div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
                 </div>

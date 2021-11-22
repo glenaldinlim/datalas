@@ -3,29 +3,25 @@
 @section('content')
     <section class="section">
         <div class="section-header">
-            <h1>Kategori Komoditas</h1>
+            <h1>Kelola Kategori Komoditas</h1>
         </div>
         <div class="section-body">
             <x-alert />
             <div class="row">
                 <div class="card col-lg-12 col-md-12 col-sm-12 col-12">
                     <div class="card-header">
-                        <h4>Kategori Komoditas</h4>
+                        <h4>List Kategori Komoditas</h4>
                         <div class="card-header-action">
-                            @hasrole('webmaster')
-                            <a href="{{ route('backend.categories.create') }}" class="btn btn-primary"><i
-                                    class="fas fa-plus"></i></a>
-                            @endhasrole
+                            <a href="{{ route('backend.categories.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="userslist">
+                            <table class="table table-striped" id="categories-table">
                                 <thead>
                                     <tr>
-                                        <th>Id</th>
+                                        <th>No</th>
                                         <th>Nama</th>
-                                        <th>Slug</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -33,10 +29,9 @@
                                 <tbody>
                                     @foreach ($category as $category)
                                         <tr>
-                                            <td>{{ $loop->iteration}}</td>
+                                            <td>{{ $no++ }}</td>
                                             <td>{{ $category->name }}</td>
-                                            <td>{{ $category->slug }}</td>
-                                            <td>{{ $category->is_active === 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td><span class="badge {{ $category->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $category->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
                                                 <a href="{{ route('backend.categories.edit', ['id' => $category->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
                                                 <form action="{{ route('backend.categories.destroy', ['id' => $category->id]) }}" method="post" class="d-inline">
@@ -59,10 +54,10 @@
 
 @push('js-additional')
     <script>
-        $("#userslist").dataTable({
+        $("#categories-table").dataTable({
             "columnDefs": [{
                 "sortable": false,
-                "targets": [4]
+                "targets": [3]
             }]
         });
 

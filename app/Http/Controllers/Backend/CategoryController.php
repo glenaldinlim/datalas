@@ -11,14 +11,28 @@ use Illuminate\Support\Str;
 class CategoryController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('role:webmaster|admin');
+        $this->middleware('auth')->except(['create', 'show', 'store', 'edit', 'update', 'destroy']);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        $categories = Category::all();
+
         return view('backend.category.index',[
-            'category'=> Category::all()
+            'no'        => 1,
+            'category'  => $categories,
         ]);
     }
 
@@ -41,17 +55,14 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $validation = \Validator::make($request->all(), [
-            'name'      => 'required|max:100',
-            //'slug'      => 'required|unique:categories',
-            //'is_active' => 'required',
-
+            'category_name'  => 'required|max:100',
         ])->validate();
 
         $category = Category::create([
-            'name'      => $request->name,
-            'slug'      => \Str::slug($request->name, '-'),
-            //'is_active' => $request->is_active,
+            'name'  => $request->get('category_name'),
+            'slug'  => \Str::slug($request->get('category_name'), '-'),
         ]);
+
         return redirect()->route('backend.categories.index')->with('success', 'Berhasil menambahkan Kategori Komoditas');
     }
 
@@ -61,11 +72,9 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
-        return view('backend.category.show',[
-            'post'=>$category
-        ]);
+        return abort(404);
     }
 
     /**
@@ -74,13 +83,13 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
+        $category = Category::findOrFail($id);
+
         return view('backend.category.edit',[
             'category' => $category,
-            'categories' => Category::all()
         ]);
-       
     }
 
     /**
@@ -90,16 +99,17 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
         $validation = $request->validate([
-            'name'      => 'required|max:100',
+            'category_name' => 'required|max:100',
+            'status_option' => 'required|boolean',
         ]);
 
-        Category::where('id',$category->id)->update([
-            'name' => $request->get('name'),
-            'slug' => \Str::slug($request->get('name'), '-'),
-            'is_active' => $request->get('status'),
+        $category = Category::where('id', $id)->update([
+            'name'      => $request->get('category_name'),
+            'slug'      => \Str::slug($request->get('category_name'), '-'),
+            'is_active' => $request->get('status_option'),
         ]);
         
         return redirect()->route('backend.categories.index')->with('success', 'Berhasil Update Kategori Komoditas');
@@ -111,10 +121,15 @@ class CategoryController extends Controller
      * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        Category::destroy($category->id);
-        return redirect()->route('backend.categories.index')->with('success','Kategori Komoditas Berhasil di Hapus');
-    }
+        try {
+            $category = Category::findOrFail($id);
+            $category->delete();
 
+            return redirect()->route('backend.categories.index')->with('success','Kategori Komoditas Berhasil di Hapus');
+        } catch (\Illuminate\Database\QueryException $err) {
+            return redirect()->route('backend.categories.index')->with('danger','Kategori komoditas gagal dihapus. Code: SQLSTATE['.$err->getCode().']');
+        }
+    }
 }

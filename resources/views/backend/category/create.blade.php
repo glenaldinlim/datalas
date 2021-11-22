@@ -12,11 +12,11 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
-                                <label for="name" class="form-label label-font">Nama Kategori</label>
-                                <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" placeholder="Nama Kategori" required>
-                                @error('name')
+                                <label for="category_name" class="form-label label-font">Nama Kategori</label>
+                                <input type="text" name="category_name" id="category_name" class="form-control @error('category_name') is-invalid @enderror" value="{{ old('category_name') }}" placeholder="Nama Kategori" required>
+                                @error('category_name')
                                     <div class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('name') }}</strong>
+                                        <strong>{{ $errors->first('category_name') }}</strong>
                                     </div>
                                 @enderror
                             </div>
