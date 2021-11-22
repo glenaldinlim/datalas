@@ -17,7 +17,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="commodity-table">
+                            <table class="table table-striped" id="commodities-table">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -56,7 +56,7 @@
 
 @push('js-additional')
     <script>
-        $("#commodity-table").dataTable({
+        $("#commodities-table").dataTable({
             "columnDefs": [
                 { "sortable": false, "targets": [4] }
             ]
