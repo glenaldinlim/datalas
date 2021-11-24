@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -55,6 +56,13 @@ class ProfileController extends Controller
         }
         $user->save();
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah profile akun pribadi',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.users.profiles.index')->with('success', 'Berhasil mengubah biodata!');
     }
 
@@ -68,6 +76,13 @@ class ProfileController extends Controller
                         ->update([
                             'email' => $request->get('email'),
                         ]);
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah email akun pribadi',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
 
         return redirect()->route('backend.users.profiles.index')->with('success', 'Berhasil mengubah email!');
     }
@@ -83,6 +98,13 @@ class ProfileController extends Controller
                         ->update([
                             'password' => \Hash::make($request->get('password'))
                         ]);
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah password akun pribadi',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
 
         return redirect()->route('backend.users.profiles.index')->with('success', 'Berhasil mengubah kata sandi!');
     }
