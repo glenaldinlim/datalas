@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\UserLog;
 use App\Models\Category;
 use App\Models\Commodity;
 use Illuminate\Http\Request;
@@ -57,6 +58,13 @@ class CommodityController extends Controller
             'slug'          => \Str::slug($request->get('commodity_name'), '-'),
         ]);
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah menambahkan Komoditas '.$request->get('commodity_name'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.commodities.index')->with('success', 'Berhasil menambahkan komoditas');
     }
 
@@ -92,6 +100,13 @@ class CommodityController extends Controller
             'is_active'     => $request->get('status_option'),
         ]);
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah komoditas '.$request->get('commodity_name'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.commodities.index')->with('success', 'Berhasil mengubah status komoditas !');
     }
 
@@ -100,6 +115,13 @@ class CommodityController extends Controller
         try {
             $commodity = Commodity::findOrFail($id);
             $commodity->delete();
+
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah menghapus komoditas '.$commodity->name,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
 
             return redirect()->route('backend.commodities.index')->with('success', 'Berhasil Menghapus Komoditas ' . $commodity->name . '!');
         } catch (\Illuminate\Database\QueryException $err) {
