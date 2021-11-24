@@ -31,8 +31,8 @@ class CategoryController extends Controller
         $categories = Category::all();
 
         return view('backend.categories.index',[
-            'no'        => 1,
-            'category'  => $categories,
+            'no'            => 1,
+            'categories'    => $categories,
         ]);
     }
 

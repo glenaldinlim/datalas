@@ -27,7 +27,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($category as $category)
+                                    @foreach ($categories as $category)
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $category->name }}</td>
