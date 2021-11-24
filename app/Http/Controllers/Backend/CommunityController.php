@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
+use App\Models\UserLog;
 use App\Models\Community;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -81,6 +82,13 @@ class CommunityController extends Controller
             'contact_phone' => $request->get('contact_phone'),
         ]);
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah menambahkan user'.$request->get('email').' dan komunitas '.$request->get('community_name'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.communities.index')->with('success', 'Berhasil menambahkan Komunitas baru!');
     }
 
@@ -144,6 +152,13 @@ class CommunityController extends Controller
             'is_active'     => $request->get('status_option'),
         ]);
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah komunitas '.$request->get('community_name'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.communities.index')->with('success', 'Berhasil mengubah Komunitas ' . $request->get('community_name') . '!');
     }
     
@@ -160,6 +175,13 @@ class CommunityController extends Controller
         try {
             $community = Community::findOrFail($id);
             $community->delete();
+
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah menghapus komunitas '.$community->name,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
 
             return redirect()->route('backend.communities.index')->with('success', 'Berhasil Menghapus Komunitas ' . $community->name . '!');
         } catch (\Illuminate\Database\QueryException $err) {
