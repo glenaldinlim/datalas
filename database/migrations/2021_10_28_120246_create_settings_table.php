@@ -22,7 +22,7 @@ class CreateSettingsTable extends Migration
             $table->string('instagram_url');
             $table->string('facebook_url');
             $table->string('twitter_url');
-            $table->string('maps_url');
+            $table->text('maps_url');
             $table->timestamps();
         });
     }
