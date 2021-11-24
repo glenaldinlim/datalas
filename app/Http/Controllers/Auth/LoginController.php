@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -49,8 +50,24 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
         if (Auth::user()->role_name == 'Community') {
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah login ke sistem DATALAS',
+                'is_login'      => 1,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
+
             return redirect()->intended(RouteServiceProvider::COMMUNITY);
         } else if (Auth::user()->role_name == 'Bod' || Auth::user()->role_name == 'Webmaster' || Auth::user()->role_name == 'Admin') {
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah login ke sistem DATALAS',
+                'is_login'      => 1,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
+            
             return redirect()->intended(RouteServiceProvider::ADMIN);
         }
     }
