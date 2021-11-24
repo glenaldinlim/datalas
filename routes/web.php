@@ -45,7 +45,7 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('users', UserController::class)->parameters(['users' => 'id'])->except(['show']);
     Route::resource('categories', CategoryController::class)->parameters(['categories' => 'id'])->except(['show']);
     Route::resource('commodities', CommodityController::class )->parameters(['commodities' => 'id']);
-    Route::resource('communities', CommunityController::class)->parameters(['communities' => 'id'])->except(['show']);
+    Route::resource('communities', CommunityController::class)->parameters(['communities' => 'id']);
     Route::resource('publications', PublicationController::class)->parameters(['publications' => 'id']);
 });
 
