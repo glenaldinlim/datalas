@@ -30,7 +30,7 @@ class CategoryController extends Controller
     {
         $categories = Category::all();
 
-        return view('backend.category.index',[
+        return view('backend.categories.index',[
             'no'        => 1,
             'category'  => $categories,
         ]);
@@ -43,7 +43,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('backend.category.create');
+        return view('backend.categories.create');
     }
 
     /**
@@ -87,7 +87,7 @@ class CategoryController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        return view('backend.category.edit',[
+        return view('backend.categories.edit',[
             'category' => $category,
         ]);
     }
