@@ -11,19 +11,57 @@
                 <div class="card-body m-3">
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <h6 class="text-center">Informasi Login</h6>
                             <div class="form-group">
-                                <label for="user-select" class="form-label label-font">Pengguna</label>
-                                <select class="form-control" name="user" id="user-select">
-                                    @foreach ($users as $user)
-                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('user')
+                                <label for="first_name" class="form-label label-font">Nama Depan</label>
+                                <input type="text" name="first_name" id="first_name" class="form-control @error('first_name') is-invalid @enderror" value="{{ old('first_name') }}" placeholder="Nama Depan" required>
+                                @error('first_name')
                                     <div class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('user') }}</strong>
+                                        <strong>{{ $errors->first('first_name') }}</strong>
                                     </div>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="last_name" class="form-label label-font">Nama Belakang</label>
+                                <input type="text" name="last_name" id="last_name" class="form-control @error('last_name') is-invalid @enderror" value="{{ old('last_name') }}" placeholder="Nama Belakang" required>
+                                @error('last_name')
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('last_name') }}</strong>
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label label-font">Email</label>
+                                <input type="email" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" placeholder="Email" required>
+                                @error('email')
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('email') }}</strong>
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label label-font">No Handphone</label>
+                                <input type="text" name="phone" id="phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('phone') }}" placeholder="Nomor Telepon" required>
+                                <small class="form-text text-muted">Ex: 6281200112233</small>
+                                @error('phone')
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('phone') }}</strong>
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="form-label label-font">Kata Sandi</label>
+                                <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Kata Sandi" required>
+                                <small class="form-text text-muted">Minimal 8 Karakter</small>
+                                @error('password')
+                                    <div class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('password') }}</strong>
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
+                            <h6 class="text-center">Informasi Komunitas</h6>
                             <div class="form-group">
                                 <label for="community_name" class="form-label label-font">Nama Komunitas</label>
                                 <input type="text" name="community_name" id="community_name"
@@ -36,17 +74,17 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="contact" class="form-label label-font">Nama Kontak</label>
-                                <input type="text" name="contact" id="contact" class="form-control @error('contact') is-invalid @enderror" value="{{ old('contact') }}" placeholder="Nama Kontak" required>
-                                @error('contact')
+                                <label for="contact_name" class="form-label label-font">Nama Narahubung</label>
+                                <input type="text" name="contact_name" id="contact_name" class="form-control @error('contact_name') is-invalid @enderror" value="{{ old('contact_name') }}" placeholder="Nama Narahubung" required>
+                                @error('contact_name')
                                     <div class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('contact') }}</strong>
+                                        <strong>{{ $errors->first('contact_name') }}</strong>
                                     </div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="contact_phone" class="form-label label-font">Nomor Kontak</label>
-                                <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('contact_phone') }}" placeholder="Nomor Kontak" required>
+                                <label for="contact_phone" class="form-label label-font">Nomor Telpon Narahubung</label>
+                                <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('contact_phone') }}" placeholder="Nomor Telepon Narahubung" required>
                                 <small class="form-text text-muted">Ex: 6281200112233</small>
                                 @error('contact_phone')
                                     <div class="invalid-feedback" role="alert">
@@ -54,15 +92,10 @@
                                     </div>
                                 @enderror
                             </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-12">
                             <div class="form-group">
                                 <label for="province" class="form-label label-font">Provinsi</label>
-                                <select class="form-control @error('province') is-invalid @enderror" name="province" id="province">
-                                    <option selected disabled>-- Pilih Provinsi --</option>
-                                    @foreach ($provinces as $province)
-                                        <option value="{{ $province['id'] }}">{{ $province['nama'] }}</option>
-                                    @endforeach
+                                <select class="form-control @error('province') is-invalid @enderror selectric" id="province" name="province">
+                                    <option> -- Pilih Provinsi --</option>
                                 </select>
                                 @error('province')
                                     <div class="invalid-feedback" role="alert">
@@ -72,8 +105,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="origin" class="form-label label-font">Kota / Kabupaten</label>
-                                <select class="form-control" name="origin" id="origin">
-                                    <option disabled selected>-- Pilih Kota / Kabupaten --</option>
+                                <select class="form-control @error('origin') is-invalid @enderror selectric" id="origin" name="origin" disabled>
+                                    <option> -- Pilih Kota / Kabupaten --</option>
                                 </select>
                                 @error('origin')
                                     <div class="invalid-feedback" role="alert">
@@ -87,18 +120,6 @@
                                 @error('address')
                                     <div class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('address') }}</strong>
-                                    </div>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="is_active" class="form-label label-font">Status</label>
-                                <select class="form-control" name="is_active" id="is_active">
-                                    <option value="1">Aktif</option>
-                                    <option value="0">Tidak Aktif</option>
-                                </select>
-                                @error('is_active')
-                                    <div class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('is_active') }}</strong>
                                     </div>
                                 @enderror
                             </div>
@@ -116,54 +137,41 @@
 
 @push('js-additional')
     <script>
-        const elementSelectProvince = document.querySelector('#province');
-        const elementReset = document.querySelector('input[type=reset]');
-        const elementOrigin = document.querySelector('#origin');
-
-        const showDistrict = (value) => {
-            const setOption = new Promise((resolve, reject) => {
-                fetch(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${value}`)
-                    .then((response) => response.json())
-                    .then((responseJson) => {
-                        elementOrigin.innerHTML = '';
-
-                        responseJson.kota_kabupaten.forEach((origin) => {
-                            elementOrigin.innerHTML += `
-                <option value="${origin.id}">${origin.nama}</option>
-            `;
-                            resolve();
-                        });
-                    })
-                    .catch((err) => {
-                        reject(err);
-                    })
-            })
-            return setOption;
-        }
-        elementSelectProvince.addEventListener('change', (event) => {
-            const value = event.target.value;
-            showDistrict(value);
-            return;
-        });
-        const resetEditDistrict = async () => {
-            const district = document.querySelector('#district').value;
-            showDistrict(elementSelectProvince.value)
-                .then(() => {
-                    const selectedDistrict = document.querySelector(`#origin option[value="${district}"]`);
-                    selectedDistrict.setAttribute('selected', true);
-                })
-        }
-        elementReset.addEventListener('click', () => {
-            setTimeout(() => {
-                if (elementSelectProvince.value) {
-                    resetEditDistrict();
-                    return;
-                } else {
-                    elementOrigin.innerHTML = `
-            <option disabled selected>-- Pilih Asal --</option>
-        `;
+        $(document).ready(() => {
+            $.ajax({
+                url: `https://dev.farizdotid.com/api/daerahindonesia/provinsi`,
+                type: 'GET',
+                dataType: 'JSON',
+                success: (res) => {
+                    if(res.provinsi != null) {
+                        $.each(res.provinsi, (i, val) => {
+                            $('#province').append(`<option value="${val.id}">${val.nama}</option>`)
+                        })
+                        $('#province').selectric('refresh');  
+                    }
                 }
-            }, 100);
+            });
+        });
+
+        $('#province').on('change', function(){
+            let id = $('#province').val()
+            $("#origin option").each(function() {
+                $(this).remove();
+            });
+            $.ajax({
+                url: `https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`,
+                type: 'GET',
+                dataType: 'JSON',
+                success: (res) => {
+                    $('#origin').prop('disabled', false)
+                    if(res.kota_kabupaten != null) {
+                        $.each(res.kota_kabupaten, (i, val) => {
+                            $('#origin').append(`<option value="${val.id}">${val.nama}</option>`)
+                        })
+                        $('#origin').selectric('refresh');  
+                    }
+                }
+            });
         });
     </script>
 @endpush

@@ -20,17 +20,12 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="userslist">
+                            <table class="table table-striped" id="communities-table">
                                 <thead>
                                     <tr>
                                         <th>No</th>
                                         <th>Nama Komunitas</th>
-                                        <th>Slug</th>
-                                        <th>Provinsi</th>
-                                        <th>Kota</th>
-                                        <th>Alamat</th>
-                                        <th>Kontak</th>
-                                        <th>Nomor Kontak</th>
+                                        <th>Region</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -40,14 +35,10 @@
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $community->name }}</td>
-                                            <td>{{ $community->slug }}</td>
-                                            <td>{{ $community->province_id }}</td>
-                                            <td>{{ $community->origin_id }}</td>
-                                            <td>{{ $community->address }}</td>
-                                            <td>{{ $community->contact_name }}</td>
-                                            <td>{{ $community->contact_phone }}</td>
-                                            <td>{{ $community->is_active === 1 ? 'Aktif' : 'Tidak Aktif' }}</td>
+                                            <td>{{ $community->origin_id }}, {{ $community->province_id }}</td>
+                                            <td><span class="badge {{ $community->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $community->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
+                                                <a href="{{ route('backend.communities.show', ['id' => $community->id]) }}" class="btn btn-warning text-white btn-sm"> <i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('backend.communities.edit', ['id' => $community->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
                                                 <form action="{{ route('backend.communities.destroy', ['id' => $community->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This Community?')">
                                                     @csrf
@@ -69,10 +60,10 @@
 
 @push('js-additional')
     <script>
-        $("#userslist").dataTable({
+        $("#communities-table").dataTable({
             "columnDefs": [{
                 "sortable": false,
-                "targets": [3, 5]
+                "targets": [4]
             }]
         });
 

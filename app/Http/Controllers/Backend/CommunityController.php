@@ -2,52 +2,26 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use GuzzleHttp\Client;
-
-use App\Models\Community;
 use App\Models\User;
+use App\Models\Community;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CommunityController extends Controller
 {
     public function __construct()
     {
         $this->middleware('role:webmaster|admin');
-        $this->middleware('auth');
-    }
-
-    // https://farizdotid.com/blog/dokumentasi-api-daerah-indonesia/
-
-    public function getDistrict($idProvince)
-    {
-        $endPoint = 'https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi='. $idProvince;
-        $client = new Client();
-        $response = $client->request('GET', $endPoint);
-
-        return json_decode($response->getBody(), true)['kota_kabupaten'];
-    }
-
-    public function getProvince()
-    {
-        $endPoint = 'http://dev.farizdotid.com/api/daerahindonesia/provinsi';
-        $client = new Client();
-        $response = $client->request('GET', $endPoint);
-
-        return json_decode($response->getBody(), true)['provinsi'];
+        $this->middleware('auth')->except(['create', 'show', 'store', 'edit', 'update', 'destroy']);
     }
 
     public function index()
     {
-        $communities = Community::join('users', 'users.id', 'communities.user_id')
-            ->select([
-                'communities.*'
-            ])
-            ->get();
+        $communities = Community::all();
 
         return view('backend.communities.index', [
-            'no' => 1,
-            'communities' => $communities
+            'no'            => 1,
+            'communities'   => $communities,
         ]);
     }
 
@@ -58,11 +32,10 @@ class CommunityController extends Controller
      */
     public function create()
     {
-        $provinces =  $this->getProvince();
-        $users = User::all();
+        $users = User::role(['community'])->get();
+
         return view('backend.communities.create', [
             'users' => $users,
-            'provinces' => $provinces
         ]);
     }
 
@@ -75,30 +48,38 @@ class CommunityController extends Controller
     public function store(Request $request)
     {
         $validation = \Validator::make($request->all(), [
-            'community_name' => 'required|max:100',
-            'contact' => 'required',
-            'contact_phone' => 'required',
-            'province' => 'required',
-            'origin' => 'required',
-            'address' => 'required',
-            'is_active' => 'required'
+            'first_name'        => 'required|max:100|regex:/^[A-Za-z ]*$/',
+            'last_name'         => 'required|max:100|regex:/^[A-Za-z ]*$/',
+            'email'             => 'required|email|unique:users',
+            'phone'             => 'required|regex:/^[0-9]*$/|max:20',
+            'password'          => 'required|min:8',
+            'community_name'    => 'required|max:200',
+            'contact_name'      => 'required|max:200',
+            'contact_phone'     => 'required|max:20|regex:/^[0-9]*$/',
+            'province'          => 'required|regex:/^[0-9]*$/',
+            'origin'            => 'required|regex:/^[0-9]*$/',
+            'address'           => 'required',
         ])->validate();
 
-        try {
-            Community::create([
-                'user_id' => $request->user,
-                'name' => $request->community_name,
-                'slug' =>\Str::slug($request->community_name, '-'),
-                'province_id' => $request->province,
-                'origin_id' => $request->origin,
-                'address' => $request->address,
-                'contact_name' => $request->contact,
-                'contact_phone' => $request->contact_phone,
-                'is_active' => $request->is_active,
-            ]);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        $user = User::create([
+            'first_name'    => ucwords($request->get('first_name')),
+            'last_name'     => ucwords($request->get('last_name')),
+            'email'         => $request->get('email'),
+            'phone'         => $request->get('contact_phone'),
+            'password'      => $request->get('password'),
+        ]);
+        $user->assignRole('community');
+
+        $community = Community::create([
+            'user_id'       => $user->id,
+            'name'          => $request->get('community_name'),
+            'slug'          =>\Str::slug($request->get('community_name'), '-'),
+            'province_id'   => $request->get('province'),
+            'origin_id'     => $request->get('origin'),
+            'address'       => $request->get('address'),
+            'contact_name'  => $user->name,
+            'contact_phone' => $request->get('contact_phone'),
+        ]);
 
         return redirect()->route('backend.communities.index')->with('success', 'Berhasil menambahkan Komunitas baru!');
     }
@@ -111,17 +92,10 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        $communityData = Community::findOrFail($id);
-        $provinces =  $this->getProvince();
-        $users = User::all();
-        $districts = $this->getDistrict($communityData->province_id);
+        $community = Community::findOrFail($id);
 
-        return view('backend.communities.edit', [
-            'communityData' => $communityData,
-            'users' => $users,
-            'provinces' => $provinces,
-            'districts' => $districts,
-            'idCommunity' => $id
+        return view('backend.communities.show', [
+            'community' => $community,
         ]);
     }
 
@@ -131,38 +105,13 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function edit($id)
     {
         $community = Community::findOrFail($id);
-        $validation = \Validator::make($request->all(), [
-            'community_name' => 'required|max:100',
-            'contact' => 'required',
-            'contact_phone' => 'required',
-            'province' => 'required',
-            'origin' => 'required',
-            'address' => 'required',
-            'is_active' => 'required'
-        ])->validate();
 
-        $data = [
-            'user_id' => $request->user,
-            'name' => $request->community_name,
-            'slug' =>\Str::slug($request->community_name, '-'),
-            'province_id' => $request->province,
-            'origin_id' => $request->origin,
-            'address' => $request->address,
-            'contact_name' => $request->contact,
-            'contact_phone' => $request->contact_phone,
-            'is_active' => $request->is_active,
-        ];
-
-        try {
-            $community->update($data);
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
-
-        return redirect()->route('backend.communities.index')->with('success', 'Berhasil mengubah Komunitas ' . $request->community_name . '!');
+        return view('backend.communities.edit', [
+            'community' => $community,
+        ]);
     }
 
     /**
@@ -172,21 +121,32 @@ class CommunityController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function update(Request $request, $id)
     {
-        $communityData = Community::findOrFail($id);
-        $provinces =  $this->getProvince();
-        $users = User::all();
-        $districts = $this->getDistrict($communityData->province_id);
+        $validation = \Validator::make($request->all(), [
+            'community_name'    => 'required|max:200',
+            'contact_name'      => 'required|max:200',
+            'contact_phone'     => 'required|max:20|regex:/^[0-9]*$/',
+            'province'          => 'required|regex:/^[0-9]*$/',
+            'origin'            => 'required|regex:/^[0-9]*$/',
+            'address'           => 'required',
+            'status_option'     => 'required|boolean'
+        ])->validate();
 
-        return view('backend.communities.edit', [
-            'communityData' => $communityData,
-            'users' => $users,
-            'provinces' => $provinces,
-            'districts' => $districts,
-            'idCommunity' => $id
+        $community = Community::whereId($id)->update([
+            'name'          => $request->get('community_name'),
+            'slug'          =>\Str::slug($request->get('community_name'), '-'),
+            'province_id'   => $request->get('province'),
+            'origin_id'     => $request->get('origin'),
+            'address'       => $request->get('address'),
+            'contact_name'  => $request->get('contact_name'),
+            'contact_phone' => $request->get('contact_phone'),
+            'is_active'     => $request->get('status_option'),
         ]);
+
+        return redirect()->route('backend.communities.index')->with('success', 'Berhasil mengubah Komunitas ' . $request->get('community_name') . '!');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -196,13 +156,15 @@ class CommunityController extends Controller
      */
     public function destroy($id)
     {
-        $community = Community::findOrFail($id);
+        
         try {
+            $community = Community::findOrFail($id);
             $community->delete();
-        } catch (\Exception $e) {
-            return $e->getMessage();
+
+            return redirect()->route('backend.communities.index')->with('success', 'Berhasil Menghapus Komunitas ' . $community->name . '!');
+        } catch (\Illuminate\Database\QueryException $err) {
+            return redirect()->route('backend.communities.index')->with('danger','Komunitas gagal dihapus. Code: SQLSTATE['.$err->getCode().']');
         }
 
-        return redirect()->route('backend.communities.index')->with('success', 'Berhasil Menghapus Komunitas ' . $community->name . '!');
     }
 }
