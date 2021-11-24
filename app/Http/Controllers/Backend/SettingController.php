@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers\Backend;
 
-use App\Http\Controllers\Controller;
+use App\Models\Setting;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class SettingController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('role:webmaster');
+        $this->middleware('auth')->except(['create', 'show', 'store', 'edit', 'update', 'destroy']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +28,7 @@ class SettingController extends Controller
     {
         $setting = Setting::findOrFail(1);
 
-        return view('', [
+        return view('backend.settings.index', [
             'setting' => $setting,
         ]);
     }
@@ -61,7 +73,11 @@ class SettingController extends Controller
      */
     public function edit($id)
     {
-        //
+        $setting = Setting::findOrFail(1);
+
+        return view('backend.settings.edit', [
+            'setting' => $setting,
+        ]);
     }
 
     /**
@@ -73,7 +89,29 @@ class SettingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validation = \Validator::make($request->all(), [
+            'about'         => 'required',
+            'address'       => 'required|max:255',
+            'telphone'     => 'required|min:12|regex:/^[0-9+() ]*$/',
+            'phone'         => 'required|min:12|regex:/^[0-9+]*$/',
+            'maps_url'      => 'required',
+            'facebook_url'  => 'required',
+            'twitter_url'   => 'required',
+            'instagram_url' => 'required',
+        ])->validate();
+
+        $setting = Setting::whereId($id)->update([
+            'about'         => $request->get('about'),
+            'address'       => $request->get('address'),
+            'telphone'      => $request->get('telphone'),
+            'phone'         => $request->get('phone'),
+            'maps_url'      => $request->get('maps_url'),
+            'facebook_url'  => $request->get('facebook_url'),
+            'twitter_url'   => $request->get('twitter_url'),
+            'instagram_url' => $request->get('instagram_url'),
+        ]);
+
+        return redirect()->route('backend.misc.settings.index')->with('success', 'Berhasil mengubah pengaturan website');
     }
 
     /**
