@@ -35,8 +35,9 @@
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $publication->type }}</td>
                                             <td>{{ $publication->title }}</td>
-                                            <td>{{ $publication->published_status }}</td>
+                                            <td><span class="badge {{ $publication->published_status == 'Publish' ? "badge-success" : "badge-secondary"}}">{{ $publication->published_status }}</span></td>
                                             <td>
+                                                <a href="{{ route('backend.publications.show', ['id' => $publication->id]) }}" class="btn btn-warning text-white btn-sm"> <i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('backend.publications.edit', ['id' => $publication->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
                                                 <form action="{{ route('backend.publications.destroy', ['id' => $publication->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This Publication?')">
                                                     @csrf
@@ -60,7 +61,7 @@
     <script>
         $("#userslist").dataTable({
             "columnDefs": [
-                { "sortable": false, "targets": [3,5] }
+                { "sortable": false, "targets": [4] }
             ]
         });
     </script>

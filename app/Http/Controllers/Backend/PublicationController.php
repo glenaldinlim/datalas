@@ -19,7 +19,7 @@ class PublicationController extends Controller
     public function __construct()
     {
         $this->middleware('role:webmaster|admin');
-        $this->middleware('auth');
+        $this->middleware('auth')->except(['create', 'show', 'store', 'edit', 'update', 'destroy']);
     }
 
     /**
@@ -44,10 +44,7 @@ class PublicationController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        return view('backend.publications.create', [
-            'users' => $users
-        ]);
+        return view('backend.publications.create');
     }
 
     /**
@@ -68,10 +65,10 @@ class PublicationController extends Controller
         $path = $request->file('cover')->store('publications', 'public');
 
         $publication = Publication::create([
-            'user_id'       => $request->get('user'),
+            'user_id'       => \Auth::user()->id,
             'type'          => $request->get('type'),
             'title'         => $request->get('title'),
-            'slug'          => \Str::slug($request->title, '-'),
+            'slug'          => \Str::slug($request->get('title'), '-'),
             'content'       => $request->get('content'),
             'cover'         => $path,
         ]);
@@ -87,7 +84,11 @@ class PublicationController extends Controller
      */
     public function show($id)
     {
-        return abort(403);
+        $publication = Publication::findOrFail($id);
+
+        return view('backend.publications.show', [
+            'publication' => $publication,
+        ]);
     }
 
     /**
@@ -115,24 +116,24 @@ class PublicationController extends Controller
     public function update(Request $request, $id)
     {
         $validation = \Validator::make($request->all(), [
-            'type'              => 'required',
-            'title'             => 'required|max:100',
-            'content'           => 'required',
-            'cover'             => 'nullable|image|max:2048',
-            'published_status'  => 'required',
+            'type'           => 'required',
+            'title'          => 'required|max:100',
+            'content'        => 'required',
+            'cover'          => 'nullable|image|max:2048',
+            'status_option'  => 'required',
         ])->validate();
 
-        $publication = Publication::findOrFail($id);
+        $publication                    = Publication::findOrFail($id);
         $publication->type              = $request->get('type');
         $publication->title             = $request->get('title');
         $publication->slug              = \Str::slug($request->title, '-');
         $publication->content           = $request->get('content');
-        $publication->published_status  = $request->get('published_status');
+        $publication->published_status  = $request->get('status_option');
         if ($request->file('cover')) {
             $path = $request->file('cover')->store('publications', 'public');
             $publication->cover = $path;
         }
-        if ($request->get('published_status') == 'Publish') {
+        if ($request->get('status_option') == 'Publish') {
             $publication->published_by = \Auth::user()->id;
             $publication->published_at = Carbon::now()->format('Y-m-d H:i:s');
         } else {
@@ -153,9 +154,12 @@ class PublicationController extends Controller
     public function destroy($id)
     {
         $publication = Publication::findOrFail($id);
-        $publication->delete();
+        if ($publication->published_status == 'Draft') {
+            $publication->delete();
 
+            return redirect()->route('backend.publications.index')->with('success', 'Berhasil Menghapus Publikasi ' . $publication->title . '!');
+        }
 
-        return redirect()->route('backend.publications.index')->with('success', 'Berhasil Menghapus Publikasi ' . $publication->title . '!');
+        return redirect()->route('backend.publications.index')->with('danger', 'Gagal Menghapus Publikasi! Ubah Status Publikasi Terlebih dahulu ke Draft!');
     }
 }
