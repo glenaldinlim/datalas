@@ -16,7 +16,7 @@
     <li class="{{ (Request::segment(2) == 'publications') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.publications.index') }}"><i class="fas fa-bullhorn"></i>&nbsp;<span>Publikasi</span></a></li>
 
     <li class="menu-header">Misc</li>
-    <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'contacts') ? 'active' : '' }}"><a class="nav-link" href="#"><i class="fas fa-inbox"></i>&nbsp;<span>Pesan Kontak</span></a></li>
+    <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'contacts') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.misc.contacts.index') }}"><i class="fas fa-inbox"></i>&nbsp;<span>Pesan Kontak</span></a></li>
     <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'settings') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.misc.settings.index') }}"><i class="fas fa-cog"></i>&nbsp;<span>Pengaturan Website</span></a></li>
     <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'logs') ? 'active' : '' }}"><a class="nav-link" href="#"><i class="far fa-clipboard"></i>&nbsp;<span>Log Aktivitas</span></a></li>
 </ul>

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
@@ -51,6 +52,7 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
 
     Route::group(['prefix' => 'misc', 'as' => 'misc.'], function() {
         Route::resource('settings', SettingController::class)->parameters(['settings' => 'id'])->only(['index', 'edit', 'update']);
+        Route::resource('contacts', ContactController::class)->parameters(['contacts' => 'id'])->only(['index']);
     });
 });
 
