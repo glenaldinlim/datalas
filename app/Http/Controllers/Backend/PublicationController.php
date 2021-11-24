@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\UserLog;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -71,6 +72,13 @@ class PublicationController extends Controller
             'slug'          => \Str::slug($request->get('title'), '-'),
             'content'       => $request->get('content'),
             'cover'         => $path,
+        ]);
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah menambahkan publikasi '.$request->get('title'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
         ]);
 
         return redirect()->route('backend.publications.index')->with('success', 'Berhasil menambahkan Publikasi!');
@@ -142,6 +150,13 @@ class PublicationController extends Controller
         }
         $publication->save();
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah publikasi '.$request->get('title'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.publications.index')->with('success', 'Berhasil melakukan Update!');
     }
 
@@ -159,6 +174,13 @@ class PublicationController extends Controller
 
             return redirect()->route('backend.publications.index')->with('success', 'Berhasil Menghapus Publikasi ' . $publication->title . '!');
         }
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah menghapus publikasi '.$publication->title,
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
 
         return redirect()->route('backend.publications.index')->with('danger', 'Gagal Menghapus Publikasi! Ubah Status Publikasi Terlebih dahulu ke Draft!');
     }
