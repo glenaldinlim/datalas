@@ -19,7 +19,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table table-striped" id="userslist">
+                            <table class="table table-striped" id="publication-table">
                                 <thead>
                                     <tr>
                                         <th>No</th>
@@ -59,7 +59,7 @@
 
 @push('js-additional')
     <script>
-        $("#userslist").dataTable({
+        $("#publication-table").dataTable({
             "columnDefs": [
                 { "sortable": false, "targets": [4] }
             ]
