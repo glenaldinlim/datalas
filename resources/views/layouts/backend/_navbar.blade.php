@@ -18,5 +18,6 @@
     <li class="menu-header">Misc</li>
     <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'contacts') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.misc.contacts.index') }}"><i class="fas fa-inbox"></i>&nbsp;<span>Pesan Kontak</span></a></li>
     <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'settings') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.misc.settings.index') }}"><i class="fas fa-cog"></i>&nbsp;<span>Pengaturan Website</span></a></li>
-    <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'logs') ? 'active' : '' }}"><a class="nav-link" href="#"><i class="far fa-clipboard"></i>&nbsp;<span>Log Aktivitas</span></a></li>
+    <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'logs' && Request::segment(4) == 'activities') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.misc.logs.activities.index') }}"><i class="far fa-clipboard"></i>&nbsp;<span>Log Aktivitas</span></a></li>
+    <li class="{{ (Request::segment(2) == 'misc' && Request::segment(3) == 'logs' && Request::segment(4) == 'accesses') ? 'active' : '' }}"><a class="nav-link" href="{{ route('backend.misc.logs.accesses.index') }}"><i class="far fa-clipboard"></i>&nbsp;<span>Log Akses</span></a></li>
 </ul>

@@ -6,9 +6,11 @@ use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
 use App\Http\Controllers\Backend\CategoryController;
+use App\Http\Controllers\Backend\AccessLogController;
 use App\Http\Controllers\Backend\CommodityController;
 use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Backend\PublicationController;
 use App\Http\Controllers\Frontend\ProfileUserController;
 use App\Http\Controllers\Frontend\CommunityDashboardController;
@@ -53,6 +55,10 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::group(['prefix' => 'misc', 'as' => 'misc.'], function() {
         Route::resource('settings', SettingController::class)->parameters(['settings' => 'id'])->only(['index', 'edit', 'update']);
         Route::resource('contacts', ContactController::class)->parameters(['contacts' => 'id'])->only(['index']);
+        Route::group(['prefix' => 'logs', 'as' => 'logs.'], function() {
+            Route::resource('activities', ActivityLogController::class)->parameters(['activities' => 'id'])->only(['index']);
+            Route::resource('accesses', AccessLogController::class)->parameters(['accesses' => 'id'])->only(['index']);
+        });
     });
 });
 

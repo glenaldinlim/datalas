@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserLog extends Model
 {
@@ -21,4 +22,9 @@ class UserLog extends Model
         'ip_address',
         'browser',
     ];
+
+    public function getTimeAttribute()
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d M Y H:i:s');
+    }
 }
