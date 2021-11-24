@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\User;
+use App\Models\UserLog;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use Illuminate\Support\Str;
 
 class CategoryController extends Controller
 {
@@ -63,6 +64,13 @@ class CategoryController extends Controller
             'slug'  => \Str::slug($request->get('category_name'), '-'),
         ]);
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah menambahkan kategori '.$request->get('category_name'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.categories.index')->with('success', 'Berhasil menambahkan Kategori Komoditas');
     }
 
@@ -111,6 +119,13 @@ class CategoryController extends Controller
             'slug'      => \Str::slug($request->get('category_name'), '-'),
             'is_active' => $request->get('status_option'),
         ]);
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah kategori '.$request->get('category_name'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
         
         return redirect()->route('backend.categories.index')->with('success', 'Berhasil Update Kategori Komoditas');
     }
@@ -126,6 +141,13 @@ class CategoryController extends Controller
         try {
             $category = Category::findOrFail($id);
             $category->delete();
+
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah menghapus kategori '.$category->name,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
 
             return redirect()->route('backend.categories.index')->with('success','Kategori Komoditas Berhasil di Hapus');
         } catch (\Illuminate\Database\QueryException $err) {
