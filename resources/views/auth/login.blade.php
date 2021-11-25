@@ -13,7 +13,12 @@
             @enderror
         </div>
         <div class="form-group">
-            <label for="password"> Password </label>
+            <div class="d-block">
+                <label for="password">Password</label>
+                <div class="float-right">
+                    <a href="#" class="text-small text-muted"> Forgot Password? </a>
+                </div>
+            </div>
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
             @error('password')
                 <div class="invalid-feedback" role="alert">
