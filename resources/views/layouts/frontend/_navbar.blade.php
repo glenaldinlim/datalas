@@ -1,12 +1,10 @@
-<ul class="navbar-nav">
-    <li class="nav-item dropdown">
-        <a href="#" data-toggle="dropdown" class="nav-link has-dropdown"><i class="fas fa-fire"></i>&nbsp;<span>Dashboard</span></a>
-        <ul class="dropdown-menu">
-            <li class="nav-item"><a href="index-0.html" class="nav-link">General Dashboard</a></li>
-            <li class="nav-item"><a href="index.html" class="nav-link">Ecommerce Dashboard</a></li>
-        </ul>
-    </li>
-    <li class="nav-item active">
-        <a href="#" class="nav-link"><i class="far fa-heart"></i>&nbsp;<span>Top Navigation</span></a>
-    </li>
+<ul class="sidebar-menu">
+    <li class="menu-header">Main</li>
+    <li class="{{ (Request::segment(2) == 'dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('front.community.dashboard') }}"><i class="fas fa-fire"></i>&nbsp;<span>Dashboard</span></a></li>
+
+    <li class="menu-header">Komunitas</li>
+    <li class="{{ (Request::segment(2) == 'productions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('front.community.dashboard') }}"><i class="fas fa-users"></i>&nbsp;<span>Data Komunitas</span></a></li>
+
+    <li class="menu-header">Produksi</li>
+    <li class="{{ (Request::segment(2) == 'productions') ? 'active' : '' }}"><a class="nav-link" href="{{ route('front.community.dashboard') }}"><i class="fas fa-boxes"></i>&nbsp;<span>Data Produksi</span></a></li>
 </ul>
