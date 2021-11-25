@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\Landing\AboutController;
+use App\Http\Controllers\Landing\IndexController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\ProfileController;
 use App\Http\Controllers\Backend\SettingController;
@@ -10,10 +12,13 @@ use App\Http\Controllers\Backend\AccessLogController;
 use App\Http\Controllers\Backend\CommodityController;
 use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Backend\DashboardController;
+use App\Http\Controllers\Landing\ProductionController;
 use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Backend\PublicationController;
+use App\Http\Controllers\Landing\ContactController as ContactLanding;
 use App\Http\Controllers\Frontend\ProfileController as CommunityProfile;
 use App\Http\Controllers\Frontend\DashboardController as CommunityDashboard;
+use App\Http\Controllers\Landing\PublicationController as PublicationLanding;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,6 +33,17 @@ use App\Http\Controllers\Frontend\DashboardController as CommunityDashboard;
 Auth::routes(['register' => false, 'password.*' => false]);
 
 Route::group(['as' => 'front.'], function() {
+    Route::group(['as' => 'landing.'], function() {
+        Route::get('/', [IndexController::class, 'index'])->name('index');
+        Route::get('/tentang', [AboutController::class, 'index'])->name('about');
+        Route::get('/data-produksi', [ProductionController::class, 'index'])->name('production');
+        Route::get('/publikasi', [PublicationLanding::class, 'index'])->name('publication');
+        Route::group(['as' => 'contact.'], function() {
+            Route::get('/kontak', [ContactLanding::class, 'index'])->name('index');
+            Route::post('/kontak', [ContactLanding::class, 'store'])->name('store');
+        });
+    });
+
     Route::group(['prefix' => 'community', 'as' => 'community.', 'middleware' => ['auth', 'role:community']], function() {
         Route::get('/dashboard', [CommunityDashboard::class, 'index'])->name('dashboard');
 
