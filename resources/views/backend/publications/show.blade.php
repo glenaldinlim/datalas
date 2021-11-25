@@ -21,7 +21,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div class="information">
                                         <b>Pembuat Publikasi</b>
-                                        <p>{{ $publication->user_id }}</p>
+                                        <p>{{ $publication->user->name }}</p>
                                     </div>
                                     <div class="information">
                                         <b>Jenis Publikasi</b>
@@ -29,7 +29,7 @@
                                     </div>
                                     <div class="information">
                                         <b>Status Publikasi</b>
-                                        <p><span class="badge {{ $publication->published_status == 'Publish' ? "badge-success" : "badge-secondary"}}">{{ $publication->published_status }} {{ $publication->published_status == 'Publish' ? 'by '.$publication->published_by.' at '.$publication->publish_time : '' }}</span></p>
+                                        <p><span class="badge {{ $publication->published_status == 'Publish' ? "badge-success" : "badge-secondary"}}">{{ $publication->published_status }} {{ $publication->published_status == 'Publish' ? 'by '.$publication->publishedBy->name.' at '.$publication->publish_time : '' }}</span></p>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">

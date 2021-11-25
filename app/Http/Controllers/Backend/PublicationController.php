@@ -92,7 +92,7 @@ class PublicationController extends Controller
      */
     public function show($id)
     {
-        $publication = Publication::findOrFail($id);
+        $publication = Publication::with(['user', 'publishedBy'])->findOrFail($id);
 
         return view('backend.publications.show', [
             'publication' => $publication,

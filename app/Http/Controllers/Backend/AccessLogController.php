@@ -15,7 +15,7 @@ class AccessLogController extends Controller
      */
     public function index()
     {
-        $accesses = UserLog::where('is_login', 1)->get();
+        $accesses = UserLog::where('is_login', 1)->with('user')->get();
 
         return view('backend.logs.accesses.index', [
             'no'        => 1,

@@ -15,7 +15,7 @@ class ActivityLogController extends Controller
      */
     public function index()
     {
-        $activities = UserLog::where('is_login', 0)->get();
+        $activities = UserLog::where('is_login', 0)->with('user')->get();
 
         return view('backend.logs.activities.index', [
             'no'        => 1,

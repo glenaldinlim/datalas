@@ -18,7 +18,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div class="information">
                                         <b>Akun Login</b>
-                                        <p>{{ $community->user_id }}</p>
+                                        <p>{{ $community->user->name }}</p>
                                     </div>
                                     <div class="information">
                                         <b>Narahubung</b>

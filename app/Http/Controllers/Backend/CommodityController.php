@@ -28,7 +28,7 @@ class CommodityController extends Controller
      */
     public function index()
     {
-        $commodities = Commodity::All();
+        $commodities = Commodity::with('category')->get();
 
         return view('backend.commodities.index', [
             'no'            => 1,

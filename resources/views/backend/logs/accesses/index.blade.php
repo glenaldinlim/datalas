@@ -17,8 +17,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Pengguna</th>
-                                        <th>Deskripsi</th>
+                                        <th>Aktivitas</th>
                                         <th>IP Address</th>
                                         <th>Browser</th>
                                         <th>Tanggal</th>
@@ -28,8 +27,7 @@
                                     @foreach ($accesses as $log)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $log->user_id }}</td>
-                                            <td>{{ $log->description }}</td>
+                                            <td>{{ $log->user->name }} {{ $log->description }}</td>
                                             <td>{{ $log->ip_address }}</td>
                                             <td>{{ $log->browser }}</td>
                                             <td>{{ $log->time }}</td>

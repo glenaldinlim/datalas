@@ -33,11 +33,7 @@ class CommunityController extends Controller
      */
     public function create()
     {
-        $users = User::role(['community'])->get();
-
-        return view('backend.communities.create', [
-            'users' => $users,
-        ]);
+        return view('backend.communities.create');
     }
 
     /**
@@ -100,7 +96,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        $community = Community::findOrFail($id);
+        $community = Community::with('user')->findOrFail($id);
 
         return view('backend.communities.show', [
             'community' => $community,

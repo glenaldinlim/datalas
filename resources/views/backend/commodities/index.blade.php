@@ -31,7 +31,7 @@
                                     @foreach ($commodities as $commodity)
                                         <tr>
                                             <td>{{ $no++ }}</td>
-                                            <td>{{ $commodity->category_id}}</td>
+                                            <td>{{ $commodity->category->name}}</td>
                                             <td>{{ $commodity->name }}</td>
                                             <td><span class="badge {{ $commodity->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $commodity->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
