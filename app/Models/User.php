@@ -63,4 +63,23 @@ class User extends Authenticatable
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('M Y');
     }
 
+    public function community()
+    {
+        return $this->hasOne(Community::class);
+    }
+
+    public function publications()
+    {
+        return $this->hasMany(Publication::class);
+    }
+
+    public function publishedBies()
+    {
+        return $this->hasMany(Publication::class, 'published_by', 'user_id');
+    }
+
+    public function userLogs()
+    {
+        return $this->hasMany(UserLog::class);
+    }
 }

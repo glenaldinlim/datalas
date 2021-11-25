@@ -27,4 +27,9 @@ class UserLog extends Model
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->created_at)->format('d M Y H:i:s');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

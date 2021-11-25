@@ -21,4 +21,14 @@ class Production extends Model
         'quartal',
         'stock',
     ];
+
+    public function commodity()
+    {
+        return $this->belongsTo(Commodity::class);
+    }
+
+    public function community()
+    {
+        return $this->belongsTo(Community::class);
+    }
 }

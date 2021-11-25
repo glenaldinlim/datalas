@@ -25,4 +25,14 @@ class Community extends Model
         'contact_phone',
         'is_active',
     ];
+
+    public function productions()
+    {
+        return $this->hasMany(Production::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

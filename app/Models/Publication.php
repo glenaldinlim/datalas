@@ -31,4 +31,14 @@ class Publication extends Model
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $this->published_at)->format('d M Y H:i:s');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function publishedBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
