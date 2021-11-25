@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class CommunityDashboardController extends Controller
+class DashboardController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -16,7 +16,7 @@ class CommunityDashboardController extends Controller
     {
         $this->middleware('auth');
     }
-
+    
     /**
      * Show the application dashboard.
      *

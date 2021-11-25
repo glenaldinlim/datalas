@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ProfileUserController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -25,9 +25,9 @@ class ProfileUserController extends Controller
      */
     public function index()
     {
-        $user = User::findOrFail(\Auth::user()->id);
+        $user = User::whereId(\Auth::user()->id)->with('community')->firstOrFail();
 
-        return view('frontend.users.profiles.index', [
+        return view('frontend.profiles.index', [
             'user'  => $user,
         ]);
     }
@@ -53,7 +53,7 @@ class ProfileUserController extends Controller
         }
         $user->save();
 
-        return redirect()->route('frontend.users.profiles.index')->with('success', 'Berhasil mengubah biodata!');
+        return redirect()->route('front.community.profiles.index')->with('success', 'Berhasil mengubah biodata!');
     }
 
     public function updateEmail(Request $request)
@@ -67,7 +67,7 @@ class ProfileUserController extends Controller
                             'email' => $request->get('email'),
                         ]);
 
-        return redirect()->route('frontend.users.profiles.index')->with('success', 'Berhasil mengubah email!');
+        return redirect()->route('front.community.profiles.index')->with('success', 'Berhasil mengubah email!');
     }
 
     public function updatePassword(Request $request)
@@ -82,74 +82,6 @@ class ProfileUserController extends Controller
                             'password' => \Hash::make($request->get('password'))
                         ]);
 
-        return redirect()->route('frontend.users.profiles.index')->with('success', 'Berhasil mengubah kata sandi!');
+        return redirect()->route('front.community.profiles.index')->with('success', 'Berhasil mengubah kata sandi!');
     }
 }
-
-
-//     /**
-//      * Show the form for creating a new resource.
-//      *
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function create()
-//     {
-//         //
-//     }
-
-//     /**
-//      * Store a newly created resource in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function store(Request $request)
-//     {
-//         //
-//     }
-
-//     /**
-//      * Display the specified resource.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function show($id)
-//     {
-//         //
-//     }
-
-//     /**
-//      * Show the form for editing the specified resource.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function edit($id)
-//     {
-//         //
-//     }
-
-//     /**
-//      * Update the specified resource in storage.
-//      *
-//      * @param  \Illuminate\Http\Request  $request
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function update(Request $request, $id)
-//     {
-//         //
-//     }
-
-//     /**
-//      * Remove the specified resource from storage.
-//      *
-//      * @param  int  $id
-//      * @return \Illuminate\Http\Response
-//      */
-//     public function destroy($id)
-//     {
-//         //
-//     }
-// }

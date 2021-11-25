@@ -15,11 +15,11 @@
                             <img alt="image" src="{{ asset('storage/'.$user->avatar) }}" class="rounded-circle profile-widget-picture">
                             <div class="profile-widget-items">
                                 <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Role</div>
-                                    <div class="profile-widget-item-value">{{ $user->role_name }}</div>
+                                    <div class="profile-widget-item-label">Komunitas</div>
+                                    <div class="profile-widget-item-value">{{ $user->community->name }}</div>
                                 </div>
                                 <div class="profile-widget-item">
-                                    <div class="profile-widget-item-label">Join at</div>
+                                    <div class="profile-widget-item-label">Bergabung Sejak</div>
                                     <div class="profile-widget-item-value">{{ $user->join_year }}</div>
                                 </div>
                             </div>
@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <h4>Ubah Email</h4>
                         </div>
-                        <form method="POST" action="{{ route('frontend.users.profiles.update.email') }}">
+                        <form method="POST" action="">
                             @csrf
                             @method('put')
                             <div class="card-body">
@@ -61,7 +61,7 @@
                         <div class="card-header">
                             <h4>Ubah Profil</h4>
                         </div>
-                        <form method="post" action="{{ route('frontend.users.profiles.update.profile') }}" enctype="multipart/form-data">
+                        <form method="post" action="" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="card-body">
@@ -131,7 +131,7 @@
                         <div class="card-header">
                             <h4>Ubah Kata Sandi</h4>
                         </div>
-                        <form method="post" action="{{ route('frontend.users.profiles.update.password') }}">
+                        <form method="post" action="">
                             @csrf
                             @method('put')
                             <div class="card-body">

@@ -12,8 +12,8 @@ use App\Http\Controllers\Backend\CommunityController;
 use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Backend\PublicationController;
-use App\Http\Controllers\Frontend\ProfileUserController;
-use App\Http\Controllers\Frontend\CommunityDashboardController;
+use App\Http\Controllers\Frontend\ProfileController as CommunityProfile;
+use App\Http\Controllers\Frontend\DashboardController as CommunityDashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,12 +28,14 @@ use App\Http\Controllers\Frontend\CommunityDashboardController;
 Auth::routes(['register' => false, 'password.*' => false]);
 
 Route::group(['as' => 'front.'], function() {
-    Route::get('/', function () {
-        return view('welcome');
-    });
-
     Route::group(['prefix' => 'community', 'as' => 'community.', 'middleware' => ['auth', 'role:community']], function() {
-        Route::get('/dashboard', [CommunityDashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [CommunityDashboard::class, 'index'])->name('dashboard');
+
+        Route::group(['prefix' => 'profiles', 'as' => 'profiles.'], function () {
+            Route::get('/', [CommunityProfile::class, 'index'])->name('index');
+            Route::put('/{id}/biodata', [ProfileController::class, 'updateBiodata'])->name('biodata');
+            Route::put('/{id}/setting', [ProfileController::class, 'updatesetting'])->name('setting');
+        });
     });
 });
 
@@ -60,16 +62,4 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
             Route::resource('accesses', AccessLogController::class)->parameters(['accesses' => 'id'])->only(['index']);
         });
     });
-});
-
-Route::group(['prefix' => 'community', 'as' => 'frontend.', 'middleware' => ['auth', 'role:community']], function() {
-    Route::get('/dashboard', [CommunityDashboardController::class, 'index'])->name('dashboard');
-
-    Route::group(['prefix' => '/users/profiles', 'as' => 'users.profiles.'], function () {
-        Route::get('/', [ProfileUserController::class, 'index'])->name('index');
-        Route::put('/email', [ProfileUserController::class, 'updateEmail'])->name('update.email');
-        Route::put('/password', [ProfileUserController::class, 'updatePassword'])->name('update.password');
-        Route::put('/', [ProfileUserController::class, 'updateProfile'])->name('update.profile');
-    });
-
 });
