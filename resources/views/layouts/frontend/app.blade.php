@@ -33,28 +33,29 @@
     <link rel="stylesheet" href="{{ asset('css/components.css') }}">
 </head>
 
-<body class="layout-3">
+<body>
     <div id="app">
-        <div class="main-wrapper ml-5 mr-5">
+        <div class="main-wrapper main-wrapper-1">
+            <!-- Navbar -->
             <div class="navbar-bg"></div>
             <nav class="navbar navbar-expand-lg main-navbar">
-                <a href="index.html" class="ml-5 navbar-brand sidebar-gone-hide">Datalas</a>
-                <a href="#" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
-                <ul class="navbar-nav navbar-right ml-auto mr-5">
-                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                        <img alt="image" src="{{ asset('storage/'.Auth::user()->avatar) }}" class="rounded-circle mr-1">
-                        <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div></a>
+                <ul class="navbar-nav mr-auto">
+                    <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>
+                </ul>
+                <ul class="navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="{{ asset('storage/'.Auth::user()->avatar) }}" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block">{{ Auth::user()->name }}</div>
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            {{-- <a href="{{ route() }}" class="dropdown-item has-icon">
-                                <i class="far fa-user"></i> Akun
-                            </a> --}}
-                            {{-- <div class="dropdown-divider"></div> --}}
                             <div class="dropdown-title">Login sebagai {{ Auth::user()->name }}</div>
-                            <a href="{{ route('frontend.users.profiles.index') }}" class="dropdown-item has-icon">
+                            <a href="{{ route('front.community.profiles.index') }}" class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profile
                             </a>
+                            <div class="dropdown-divider"></div>
                             <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i> Keluar
+                                <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
@@ -64,12 +65,21 @@
                 </ul>
             </nav>
 
-            <!-- Top Nav -->
-            <nav class="navbar navbar-secondary navbar-expand-lg">
-                <div class="ml-5 mr-5">
+            <!-- Sidebar -->
+            <div class="main-sidebar sidebar-style-2">
+                <aside id="sidebar-wrapper">
+                    <!-- Sidebar Brand -->
+                    <div class="sidebar-brand">
+                        <a href="#">Datalas</a>
+                    </div>
+                    <div class="sidebar-brand sidebar-brand-sm">
+                        <a href="#">D</a>
+                    </div>
+
+                    <!-- Sidebar Menu -->
                     @include('layouts.frontend._navbar')
-                </div>
-            </nav>
+                </aside>
+            </div>
 
             <!-- Main Content -->
             <div class="main-content">
