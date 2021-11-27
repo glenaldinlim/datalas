@@ -72,7 +72,7 @@ class ProductionController extends Controller
             'browser'       => $request->header('User-Agent'),
         ]);
 
-        return redirect()->route('front.community.productions.index')->with('success', 'Berhasil menambahkan produksi');
+        return redirect()->route('front.community.productions.index')->with('success', 'Berhasil menambahkan data produksi');
     }
 
     /**
@@ -126,6 +126,13 @@ class ProductionController extends Controller
             'stock'                 => $request->get('stock'),
         ]);
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah data produksi tahun '.$request->get('year_production').'('.$request->get('quartal').')',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('front.community.productions.index')->with('success', 'Berhasil melakukan update Data produksi!');
     }
 
@@ -140,6 +147,13 @@ class ProductionController extends Controller
         try {
             $production = Production::findOrFail($id);
             $production->delete();
+
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah menghapus data produksi tahun '.$production->year_production.'('.$production->quartal.')',
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
 
             return redirect()->route('front.community.productions.index')->with('success', 'Berhasil Menghapus data produksi di tahun '.$production->year_production.'('.$production->quartal.') !');
         } catch (\Illuminate\Database\QueryException $err) {
