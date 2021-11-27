@@ -20,6 +20,7 @@ use App\Http\Controllers\Frontend\ProfileController as CommunityProfile;
 use App\Http\Controllers\Frontend\CommunityController as CommunityFrontend;
 use App\Http\Controllers\Frontend\DashboardController as CommunityDashboard;
 use App\Http\Controllers\Landing\PublicationController as PublicationLanding;
+use App\Http\Controllers\Frontend\ProductionController as CommunityProduction;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,6 +56,7 @@ Route::group(['as' => 'front.'], function() {
         });
 
         Route::resource('communities', CommunityFrontend::class)->parameters(['communities' => 'id'])->only(['index', 'edit', 'update']);
+        Route::resource('productions', CommunityProduction::class)->parameters(['productions' => 'id'])->except(['show']);
     });
 });
 
