@@ -4,7 +4,7 @@ html {
 
 body {
     background-color: #F2FFFB !important;
-    color: #fff !important;
+    /* color: #fff !important; */
     font-family: 'Poppins', sans-serif !important;
 }
 
@@ -30,6 +30,15 @@ body {
 
 #footer-container {
     width: 740px;
+}
+
+/* Login and Contact */
+.login-bg {
+    background: url('../../img/login-bg.png') center / cover no-repeat;
+}
+
+.contact-bg {
+    background: url('../../img/contact-bg.png') center / cover no-repeat;
 }
 
 /* Navbar */

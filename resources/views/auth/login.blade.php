@@ -13,11 +13,9 @@
             @enderror
         </div>
         <div class="form-group">
-            <div class="d-block">
-                <label for="password">Password</label>
-                <div class="float-right">
-                    <a href="#" class="text-small text-muted"> Forgot Password? </a>
-                </div>
+            <label for="password">Password</label>
+            <div class="float-right">
+                <a href="#" class="text-small text-muted"> Forgot Password? </a>
             </div>
             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
             @error('password')

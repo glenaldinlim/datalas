@@ -23,30 +23,29 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/components.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/front/custom.css') }}">
 </head>
 
 <body>
     <div id="app">
         <section class="section">
-                <div class="d-flex flex-wrap align-items-stretch">
-                    <div class="col-lg-8 col-md-6 col-12 p-0">
-                        <img src="{{ asset('img/login-bg.png') }}" alt="background">
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-12 bg-white">
-                        <div class="p-4 m-3">  
-                            <div class="login-brand">
-                                <img src="{{ asset('favicon/android-chrome-512x512.png') }}" alt="logo" width="100" class="">
-                            </div>
-                            <h4 class="text-primary font-weight-bold text-center">{{ __('Login ke Sistem Datalas') }}</h4>
-                            <div class="card-body">
-                                @yield('content')
-                            </div>
-                            <div class="simple-footer">
-                                Copyright &copy; 2021 - {{ date('Y') }} &mdash; <a href="{{ config('app.url') }}">{{ config('app.name') }}</a> <div class="bullet"></div> Admin Template By <a href="http://getstisla.com/">Stisla</a>
-                            </div>
-                        </div> 
-                    </div>
+            <div class="row m-0 vh-100">
+                <div class="col p-0 d-none d-lg-block login-bg"></div>
+                <div class="col d-flex flex-column justify-content-center align-items-center p-0 w-100 bg-white">
+                    <div class="p-4 m-3">  
+                        <div class="login-brand">
+                            <img src="{{ asset('favicon/android-chrome-512x512.png') }}" alt="logo" width="100" class="">
+                        </div>
+                        <h4 class="text-primary font-weight-bold text-center">{{ __('Login ke Sistem Datalas') }}</h4>
+                        <div class="card-body">
+                            @yield('content')
+                        </div>
+                        <div class="simple-footer">
+                            Copyright &copy; 2021 - {{ date('Y') }} &mdash; <a href="{{ config('app.url') }}">{{ config('app.name') }}</a> <div class="bullet"></div> Admin Template By <a href="http://getstisla.com/">Stisla</a>
+                        </div>
+                    </div> 
                 </div>
+            </div>
         </section>
     </div>
 
