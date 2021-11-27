@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Community;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -44,14 +45,25 @@ class UserSeeder extends Seeder
         ]);
         $admin->assignRole('webmaster');
 
-        $community = User::create([
+        $user = User::create([
             'first_name'    => 'John',
-            'last_name'    => 'Doe',
+            'last_name'     => 'Doe',
             'email'         => 'johndoe@datalas.test',
             'gender'        => 'M',
             'phone'         => '6281200112233',
             'password'      => bcrypt('password'),
         ]);
-        $community->assignRole('community');
+        $user->assignRole('community');
+
+        $community = Community::create([
+            'user_id'       => $user->id,
+            'name'          => 'Petani Desa Makmur',
+            'slug'          => 'petani-desa-makmur',
+            'province_id'   => 32,
+            'origin_id'     => 3201,
+            'address'       => 'Jl.in aja dulu, No 1 RT01/01, Sukajadi, Cipanas',
+            'contact_name'  => 'Smith Jr',
+            'contact_phone' => '6281200112233',
+        ]);
     }
 }
