@@ -9,14 +9,14 @@
             <div class="col-lg-3 col-md-6 col-sm-6 col-12">
                 <div class="card card-statistic-1">
                     <div class="card-icon bg-primary text-white">
-                        <i class="fas fa-user-lock fa-2x"></i>
+                        <i class="fas fa-boxes fa-2x"></i>
                     </div>
                     <div class="card-wrap">
                         <div class="card-header">
-                            <h4>Produksi</h4>
+                            <h4>Data Produksi</h4>
                         </div>
                         <div class="card-body">
-                            0
+                            {{ $production }}
                         </div>
                     </div>
                 </div>
