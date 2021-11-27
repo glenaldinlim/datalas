@@ -12,9 +12,7 @@
                     <div class="card-header">
                         <h4>List Publikasi</h4>
                         <div class="card-header-action">
-                            @hasrole('webmaster')
-                                <a href="{{ route('backend.publications.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
-                            @endhasrole
+                            <a href="{{ route('backend.publications.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
                         </div>
                     </div>
                     <div class="card-body">
