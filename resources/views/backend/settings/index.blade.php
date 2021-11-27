@@ -6,6 +6,7 @@
             <h1>Kelola Pengaturan Website</h1>
         </div>
         <div class="section-body">
+            <x-alert />
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
