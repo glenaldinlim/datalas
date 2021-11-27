@@ -17,6 +17,7 @@ use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Backend\PublicationController;
 use App\Http\Controllers\Landing\ContactController as ContactLanding;
 use App\Http\Controllers\Frontend\ProfileController as CommunityProfile;
+use App\Http\Controllers\Frontend\CommunityController as CommunityFrontend;
 use App\Http\Controllers\Frontend\DashboardController as CommunityDashboard;
 use App\Http\Controllers\Landing\PublicationController as PublicationLanding;
 
@@ -52,6 +53,8 @@ Route::group(['as' => 'front.'], function() {
             Route::put('/{id}/biodata', [ProfileController::class, 'updateBiodata'])->name('biodata');
             Route::put('/{id}/setting', [ProfileController::class, 'updatesetting'])->name('setting');
         });
+
+        Route::resource('communities', CommunityFrontend::class)->parameters(['communities' => 'id'])->only(['index', 'edit', 'update']);
     });
 });
 
