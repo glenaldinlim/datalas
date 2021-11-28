@@ -15,7 +15,7 @@ class CreateUserLogsTable extends Migration
     {
         Schema::create('user_logs', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->nullable()->default(NULL);
             $table->string('description');
             $table->boolean('is_login')->default(0);
             $table->ipAddress('ip_address');
