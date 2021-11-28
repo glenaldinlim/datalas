@@ -9,7 +9,7 @@
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="{{ route('front.landing.about') }}">Tentang</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('front.landing.production') }}">Data Produksi</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{{ route('front.landing.publication') }}">Publikasi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('front.landing.publications.index') }}">Publikasi</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('front.landing.contact.index') }}">Kontak</a></li>
                 </ul>
                 @if(Route::has('login'))

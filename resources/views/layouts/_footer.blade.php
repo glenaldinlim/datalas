@@ -19,7 +19,7 @@
                 <a class="text-decoration-none text-white" href="{{ route('front.landing.production') }}">Data produksi</a>
             </div>
             <div class="col">
-                <a class="text-decoration-none text-white" href="{{ route('front.landing.publication') }}">Publikasi</a>
+                <a class="text-decoration-none text-white" href="{{ route('front.landing.publications.index') }}">Publikasi</a>
             </div>
             <div class="col">
                 <a class="text-decoration-none text-white" href="{{ route('front.landing.contact.index') }}">Kontak</a>
