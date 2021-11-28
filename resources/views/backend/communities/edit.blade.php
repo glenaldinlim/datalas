@@ -37,7 +37,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="contact_phone" class="form-label label-font">Nomor Telpon Narahubung</label>
-                                <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('phone') is-invalid @enderror" value="{{ old('contact_phone') ?? $community->contact_phone }}" placeholder="Nomor Telepon Narahubung" required>
+                                <input type="text" name="contact_phone" id="contact_phone" class="form-control @error('contact_phone') is-invalid @enderror" value="{{ old('contact_phone') ?? $community->contact_phone }}" placeholder="Nomor Telepon Narahubung" required>
                                 <small class="form-text text-muted">Ex: 6281200112233</small>
                                 @error('contact_phone')
                                     <div class="invalid-feedback" role="alert">

@@ -110,7 +110,7 @@ class CommodityController extends Controller
         return redirect()->route('backend.commodities.index')->with('success', 'Berhasil mengubah status komoditas !');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         try {
             $commodity = Commodity::findOrFail($id);

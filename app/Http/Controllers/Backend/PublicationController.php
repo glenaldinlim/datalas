@@ -166,21 +166,21 @@ class PublicationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $publication = Publication::findOrFail($id);
         if ($publication->published_status == 'Draft') {
             $publication->delete();
 
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah menghapus publikasi '.$publication->title,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
+
             return redirect()->route('backend.publications.index')->with('success', 'Berhasil Menghapus Publikasi ' . $publication->title . '!');
         }
-
-        UserLog::create([
-            'user_id'       => \Auth::user()->id,
-            'description'   => 'telah menghapus publikasi '.$publication->title,
-            'ip_address'    => $request->ip(),
-            'browser'       => $request->header('User-Agent'),
-        ]);
 
         return redirect()->route('backend.publications.index')->with('danger', 'Gagal Menghapus Publikasi! Ubah Status Publikasi Terlebih dahulu ke Draft!');
     }

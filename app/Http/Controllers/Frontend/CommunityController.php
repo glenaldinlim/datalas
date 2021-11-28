@@ -118,6 +118,6 @@ class CommunityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return abort(404);
     }
 }
