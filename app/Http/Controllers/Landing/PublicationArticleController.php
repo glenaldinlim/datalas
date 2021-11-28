@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Landing;
 
+use App\Models\UserLog;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,11 +14,18 @@ class PublicationArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $publications = Publication::where('published_status', 'Publish')
                                     ->where('type', 'Article')
                                     ->paginate(9);
+
+        UserLog::create([
+            'user_id'       => \Auth::user() != NULL ? \Auth::user()->id : NULL,
+            'description'   => 'telah mengakses halaman landing page (artikel)',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
 
         return view('landing.publication.publication', [
             'heroTitle'     => 'Artikel',
