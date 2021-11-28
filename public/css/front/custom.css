@@ -23,6 +23,11 @@ body {
     background: url("../../img/hero-bg.png") center / cover no-repeat;
 }
 
+.hr-primary {
+    border: 2px solid #43AA8B;
+    margin: 0;
+}
+
 #footer {
     min-height: 370px;
     width: 100%;
