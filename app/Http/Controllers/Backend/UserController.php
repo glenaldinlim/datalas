@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\User;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -69,6 +70,13 @@ class UserController extends Controller
         ]);
         $user->assignRole($request->get('role'));
 
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah menambahkan user baru '.$request->get('email'),
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
         return redirect()->route('backend.users.index')->with('success', 'Berhasil menambahkan Administrator baru!');
     }
 
@@ -114,6 +122,13 @@ class UserController extends Controller
     
             $user = User::findOrFail($id);
             $user->syncRoles($request->get('role'));
+
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah mengubah role dari user '.$user->name.' ke '.$request->get('role'),
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
     
             return redirect()->route('backend.users.index')->with('success', 'Berhasil mengubah role dari '.$user->name.'!');
         }
@@ -132,6 +147,13 @@ class UserController extends Controller
         if (\Auth::user()->id != $id) {
             $user = User::findOrFail($id);
             $user->delete();
+
+            UserLog::create([
+                'user_id'       => \Auth::user()->id,
+                'description'   => 'telah menghapus user '.$user->name,
+                'ip_address'    => $request->ip(),
+                'browser'       => $request->header('User-Agent'),
+            ]);
 
             return redirect()->route('backend.admins.index')->with('success', 'Berhasil menghapus Administrator '.$user->name.'!');
         }

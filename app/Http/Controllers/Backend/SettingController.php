@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Setting;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -109,6 +110,13 @@ class SettingController extends Controller
             'facebook_url'  => $request->get('facebook_url'),
             'twitter_url'   => $request->get('twitter_url'),
             'instagram_url' => $request->get('instagram_url'),
+        ]);
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengubah pengaturan website',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
         ]);
 
         return redirect()->route('backend.misc.settings.index')->with('success', 'Berhasil mengubah pengaturan website');

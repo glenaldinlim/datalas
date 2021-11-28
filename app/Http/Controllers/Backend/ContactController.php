@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Models\Contact;
+use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -13,9 +14,16 @@ class ContactController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $contacts = Contact::all();
+
+        UserLog::create([
+            'user_id'       => \Auth::user()->id,
+            'description'   => 'telah mengakses halaman pesan masuk',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
 
         return view('backend.contacts.index', [
             'no'        => 1,
