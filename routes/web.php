@@ -15,6 +15,8 @@ use App\Http\Controllers\Backend\DashboardController;
 use App\Http\Controllers\Landing\ProductionController;
 use App\Http\Controllers\Backend\ActivityLogController;
 use App\Http\Controllers\Backend\PublicationController;
+use App\Http\Controllers\Landing\PublicationNewsController;
+use App\Http\Controllers\Landing\PublicationArticleController;
 use App\Http\Controllers\Landing\ContactController as ContactLanding;
 use App\Http\Controllers\Frontend\ProfileController as CommunityProfile;
 use App\Http\Controllers\Frontend\CommunityController as CommunityFrontend;
@@ -39,7 +41,11 @@ Route::group(['as' => 'front.'], function() {
         Route::get('/', [IndexController::class, 'index'])->name('index');
         Route::get('/tentang', [AboutController::class, 'index'])->name('about');
         Route::get('/data-produksi', [ProductionController::class, 'index'])->name('production');
-        Route::get('/publikasi', [PublicationLanding::class, 'index'])->name('publication');
+        Route::group(['prefix' => 'publications', 'as' => 'publications.'], function() {
+            Route::get('/', [PublicationLanding::class, 'index'])->name('index');
+            Route::resource('news', PublicationNewsController::class)->parameters(['mews' => 'slug'])->only(['index', 'show']);
+            Route::resource('articles', PublicationArticleController::class)->parameters(['articles' => 'slug'])->only(['index', 'show']);
+        });
         Route::group(['as' => 'contact.'], function() {
             Route::get('/kontak', [ContactLanding::class, 'index'])->name('index');
             Route::post('/kontak', [ContactLanding::class, 'store'])->name('store');
