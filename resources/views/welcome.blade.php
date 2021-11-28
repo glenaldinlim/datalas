@@ -24,7 +24,7 @@
                 @endforeach
             </div>
             <div class="text-center">
-                <a href="" class="btn btn-primary text-white py-1 px-5">Lihat berita lainnya</a>
+                <a href="{{ route('front.landing.publications.news.index') }}" class="btn btn-primary text-white py-1 px-5">Lihat berita lainnya</a>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
                 @endforeach
             </div>
             <div class="text-center">
-                <a href="" class="btn btn-primary text-white py-1 px-5">Lihat artikel lainnya</a>
+                <a href="{{ route('front.landing.publications.articles.index') }}" class="btn btn-primary text-white py-1 px-5">Lihat artikel lainnya</a>
             </div>
         </div>
     </div>
