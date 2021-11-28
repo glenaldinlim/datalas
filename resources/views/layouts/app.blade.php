@@ -36,9 +36,9 @@
     <div class="app">
         @include('layouts._header')
 
-        <div class="mt-5 mb-5">
+        <main>
             @yield('content')
-        </div>
+        </main>
     
         @include('layouts._footer')
     </div>
