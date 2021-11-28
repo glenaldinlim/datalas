@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Commodity;
 use Illuminate\Database\Seeder;
 
 class CommoditySeeder extends Seeder

@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
         $bod = User::create([
             'first_name'    => 'Chief of Technology',
             'last_name'     => 'CTO',
-            'email'         => 'cto@datalas.test',
+            'email'         => 'cto@datalas.tech',
             'gender'        => 'M',
             'phone'         => '6281200112233',
             'password'      => bcrypt('password'),
@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         $webmaster = User::create([
             'first_name'    => 'WebMaster',
             'last_name'     => 'WebMaster',
-            'email'         => 'webmaster@datalas.test',
+            'email'         => 'webmaster@datalas.tech',
             'gender'        => 'M',
             'phone'         => '6281200112233',
             'password'      => bcrypt('password'),
@@ -38,17 +38,17 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'first_name'    => 'Administrator',
             'last_name'     => 'Administrator',
-            'email'         => 'admin@datalas.test',
+            'email'         => 'admin@datalas.tech',
             'gender'        => 'M',
             'phone'         => '6281200112233',
             'password'      => bcrypt('password'),
         ]);
-        $admin->assignRole('webmaster');
+        $admin->assignRole('admin');
 
         $user = User::create([
             'first_name'    => 'John',
             'last_name'     => 'Doe',
-            'email'         => 'johndoe@datalas.test',
+            'email'         => 'johndoe@datalas.tech',
             'gender'        => 'M',
             'phone'         => '6281200112233',
             'password'      => bcrypt('password'),
