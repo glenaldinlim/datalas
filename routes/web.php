@@ -51,8 +51,9 @@ Route::group(['as' => 'front.'], function() {
 
         Route::group(['prefix' => 'profiles', 'as' => 'profiles.'], function () {
             Route::get('/', [CommunityProfile::class, 'index'])->name('index');
-            Route::put('/{id}/biodata', [ProfileController::class, 'updateBiodata'])->name('biodata');
-            Route::put('/{id}/setting', [ProfileController::class, 'updatesetting'])->name('setting');
+            Route::put('/email', [CommunityProfile::class, 'updateEmail'])->name('update.email');
+            Route::put('/password', [CommunityProfile::class, 'updatePassword'])->name('update.password');
+            Route::put('/', [CommunityProfile::class, 'updateProfile'])->name('update.profile');
         });
 
         Route::resource('communities', CommunityFrontend::class)->parameters(['communities' => 'id'])->only(['index', 'edit', 'update']);

@@ -14,7 +14,13 @@
                 </ul>
                 @if(Route::has('login'))
                     @auth
-                        <a href="{{ route('frontend.dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        @if(Auth::user()->role_name == 'Bod' || Auth::user()->role_name == 'Admin' || Auth::user()->role_name == 'Webmaster')
+                            <a href="{{ route('backend.dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        @elseif(Auth::user()->role_name == 'Community')
+                            <a href="{{ route('front.community.dashboard') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        @else
+                            <a href="#" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
+                        @endif
                     @else
                         <span class="navbar-text actions ml-4">
                             <a class="btn btn-primary action-button" role="button" href="{{ route('login') }}">Login</a>

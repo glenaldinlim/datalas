@@ -34,7 +34,7 @@
                         <div class="card-header">
                             <h4>Ubah Email</h4>
                         </div>
-                        <form method="POST" action="">
+                        <form method="POST" action="{{ route('front.community.profiles.update.email') }}">
                             @csrf
                             @method('put')
                             <div class="card-body">
@@ -61,7 +61,7 @@
                         <div class="card-header">
                             <h4>Ubah Profil</h4>
                         </div>
-                        <form method="post" action="" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('front.community.profiles.update.profile') }}" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                             <div class="card-body">
@@ -131,7 +131,7 @@
                         <div class="card-header">
                             <h4>Ubah Kata Sandi</h4>
                         </div>
-                        <form method="post" action="">
+                        <form method="post" action="{{ route('front.community.profiles.update.password') }}">
                             @csrf
                             @method('put')
                             <div class="card-body">
