@@ -36,7 +36,12 @@
                         <h4 class="text-primary font-weight-bold text-center">{{ __('Get in Touch') }}</h4>
                         <h6 class="text-muted text-center">{{ __('Hubungi kami jika perlu bantuan') }}</h6>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
+                            @if (Session::has('success'))
+                            <div class="alert alert-primary col-12" id="alert">
+                                {{ Session::get('success') }}
+                            </div>
+                            @endif
+                            <form method="POST" action="{{ route('front.landing.contact.store') }}" class="needs-validation" novalidate="">
                                 @csrf
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
@@ -103,6 +108,11 @@
 
     <!-- Template JS File -->
     <script src="{{ asset('js/scripts.js') }}"></script>
-    <script src="{{ asset('js/custom.js') }}"></script>
+    <script src="{{ asset('js/front/custom.js') }}"></script>
+    <script>
+        $("#alert").fadeTo(3000, 500).slideUp(500, function(){
+            $("#alert").slideUp(500);
+        });
+    </script>
 </body>
 </html>
