@@ -19,10 +19,10 @@ class ContactSeeder extends Seeder
 
         for ($i=0; $i < 5; $i++) { 
             Contact::create([
-                'first_name' => $faker->firstName(),
-                'last_name' => $faker->lastName(),
-                'email' => $faker->unique()->safeEmail(),
-                'message' =>$faker->paragraph(),
+                'first_name'    => $faker->firstName(),
+                'last_name'     => $faker->lastName(),
+                'email'         => $faker->unique()->safeEmail(),
+                'message'       =>$faker->paragraph(),
             ]);
         }
     }

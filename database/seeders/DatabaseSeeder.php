@@ -18,7 +18,6 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             CategorySeeder::class,
             CommoditySeeder::class,
-            ContactSeeder::class,
             SettingSeeder::class,
         ]);
     }
