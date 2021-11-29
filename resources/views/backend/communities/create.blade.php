@@ -139,7 +139,7 @@
     <script>
         $(document).ready(() => {
             $.ajax({
-                url: `http://datalas.test:8080/api/v1/provinces`,
+                url: `http://datalas.tech/api/v1/provinces`,
                 type: 'GET',
                 dataType: 'JSON',
                 success: (res) => {
@@ -159,7 +159,7 @@
                 $(this).remove();
             });
             $.ajax({
-                url: `http://datalas.test:8080/api/v1/provinces/${id}`,
+                url: `http://datalas.tech/api/v1/provinces/${id}`,
                 type: 'GET',
                 dataType: 'JSON',
                 success: (res) => {

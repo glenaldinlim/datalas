@@ -111,7 +111,7 @@
         const province_id =$('#province_id').val()
         const origin_id = $('#origin_id').val()
         $.ajax({
-            url: `http://datalas.test:8080/api/v1/provinces`,
+            url: `http://datalas.tech/api/v1/provinces`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
@@ -129,7 +129,7 @@
         });
 
         $.ajax({
-            url: `http://datalas.test:8080/api/v1/provinces/${province_id}`,
+            url: `http://datalas.tech/api/v1/provinces/${province_id}`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
@@ -152,7 +152,7 @@
             $(this).remove();
         });
         $.ajax({
-            url: `http://datalas.test:8080/api/v1/provinces/${id}`,
+            url: `http://datalas.tech/api/v1/provinces/${id}`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
