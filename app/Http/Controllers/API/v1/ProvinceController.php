@@ -11,7 +11,7 @@ class ProvinceController extends Controller
 {
     public function index()
     {
-        $provinces = Province::with('origins')->get();
+        $provinces = Province::with('origins')->where('is_active', 1)->get();
         
         return ProvinceResource::collection($provinces);
     }

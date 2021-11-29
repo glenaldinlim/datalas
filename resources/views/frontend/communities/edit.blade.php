@@ -111,16 +111,17 @@
         const province_id =$('#province_id').val()
         const origin_id = $('#origin_id').val()
         $.ajax({
-            url: `https://dev.farizdotid.com/api/daerahindonesia/provinsi`,
+            url: `http://datalas.test:8080/api/v1/provinces`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
-                if(res.provinsi != null) {
-                    $.each(res.provinsi, (i, val) => {
+                if(res.data != null) {
+                    $.each(res.data, (i, val) => {
                         if (val.id == province_id) {
-                            $('#province').append(`<option value="${val.id}" selected>${val.nama}</option>`)
+                            $('#province').append(`<option value="${val.id}" selected>${val.name}</option>`)
+                        } else {
+                            $('#province').append(`<option value="${val.id}">${val.name}</option>`)
                         }
-                        $('#province').append(`<option value="${val.id}">${val.nama}</option>`)
                     })
                     $('#province').selectric('refresh');  
                 }
@@ -128,16 +129,16 @@
         });
 
         $.ajax({
-            url: `https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${province_id}`,
+            url: `http://datalas.test:8080/api/v1/provinces/${province_id}`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
-                if(res.kota_kabupaten != null) {
-                    $.each(res.kota_kabupaten, (i, val) => {
+                if(res.data.origins != null) {
+                    $.each(res.data.origins, (i, val) => {
                         if (val.id == origin_id) {
-                            $('#origin').append(`<option value="${val.id}" selected>${val.nama}</option>`)
+                            $('#origin').append(`<option value="${val.id}" selected>${val.name}</option>`)
                         }
-                        $('#origin').append(`<option value="${val.id}">${val.nama}</option>`)
+                        $('#origin').append(`<option value="${val.id}">${val.name}</option>`)
                     })
                     $('#origin').selectric('refresh');  
                 }
@@ -145,22 +146,20 @@
         });
     });
 
-    
-
     $('#province').on('change', function(){
         let id = $('#province').val()
         $("#origin option").each(function() {
             $(this).remove();
         });
         $.ajax({
-            url: `https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`,
+            url: `http://datalas.test:8080/api/v1/provinces/${id}`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
                 $('#origin').prop('disabled', false)
-                if(res.kota_kabupaten != null) {
-                    $.each(res.kota_kabupaten, (i, val) => {
-                        $('#origin').append(`<option value="${val.id}">${val.nama}</option>`)
+                if(res.data.origins != null) {
+                    $.each(res.data.origins, (i, val) => {
+                        $('#origin').append(`<option value="${val.id}">${val.name}</option>`)
                     })
                     $('#origin').selectric('refresh');  
                 }
