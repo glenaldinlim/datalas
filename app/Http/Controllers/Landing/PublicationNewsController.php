@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Landing;
 
+use App\Models\UserLog;
 use App\Models\Publication;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
