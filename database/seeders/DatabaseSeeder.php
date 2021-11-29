@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             CategorySeeder::class,
             CommoditySeeder::class,
             SettingSeeder::class,
+            ProductionSeeder::class,
         ]);
     }
 }
