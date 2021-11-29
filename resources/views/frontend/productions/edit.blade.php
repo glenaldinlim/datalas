@@ -36,7 +36,7 @@
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label for="quartal" class="form-label label-font">Kuarltal</label>
+                                <label for="quartal" class="form-label label-font">Kuartal</label>
                                 <select class="form-control @error('quartal') is-invalid @enderror selectric" id="quartal" name="quartal">
                                     <option value="Q1" {{ old('quartal') ?? $production->quartal == 'Q1' ? 'selected' : '' }}>Kuartal 1</option>
                                     <option value="Q2" {{ old('quartal') ?? $production->quartal == 'Q2' ? 'selected' : '' }}>Kuartal 2</option>

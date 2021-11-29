@@ -23,7 +23,7 @@
                                         <th>No</th>
                                         <th>Komoditas</th>
                                         <th>Tahun Produksi</th>
-                                        <th>Stock</th>
+                                        <th>Stok</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -36,7 +36,7 @@
                                             <td>{{ $production->stock }}</td>
                                             <td>
                                                 <a href="{{ route('front.community.productions.edit', ['id' => $production->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('front.community.productions.destroy', ['id' => $production->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This production?')">
+                                                <form action="{{ route('front.community.productions.destroy', ['id' => $production->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin menghapus data produksi ini?')">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

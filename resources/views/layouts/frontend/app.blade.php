@@ -51,7 +51,7 @@
                         <div class="dropdown-menu dropdown-menu-right">
                             <div class="dropdown-title">Login sebagai {{ Auth::user()->name }}</div>
                             <a href="{{ route('front.community.profiles.index') }}" class="dropdown-item has-icon">
-                                <i class="far fa-user"></i> Profile
+                                <i class="far fa-user"></i> Profil
                             </a>
                             <div class="dropdown-divider"></div>
                             <a href="{{ route('logout') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

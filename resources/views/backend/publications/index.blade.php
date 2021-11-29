@@ -37,7 +37,7 @@
                                             <td>
                                                 <a href="{{ route('backend.publications.show', ['id' => $publication->id]) }}" class="btn btn-warning text-white btn-sm"> <i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('backend.publications.edit', ['id' => $publication->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('backend.publications.destroy', ['id' => $publication->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This Publication?')">
+                                                <form action="{{ route('backend.publications.destroy', ['id' => $publication->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin menghapus publikasi ini?')">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

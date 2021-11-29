@@ -36,7 +36,7 @@
                                             <td><span class="badge {{ $commodity->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $commodity->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
                                                 <a href="{{ route('backend.commodities.edit', ['id' => $commodity->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('backend.commodities.destroy', ['id' => $commodity->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This commodity?')">
+                                                <form action="{{ route('backend.commodities.destroy', ['id' => $commodity->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin menghapus komoditas ini?')">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

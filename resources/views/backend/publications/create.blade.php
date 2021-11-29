@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group">
                             <label for="content" class="form-label label-font">Konten</label>
-                            <textarea class="form-control summernote-simple @error('title') is-invalid @enderror" name="content" id="content" rows="3" required>{{ old('content') }}</textarea>
+                            <textarea class="form-control summernote-simple @error('content') is-invalid @enderror" name="content" id="content" rows="3" required>{{ old('content') }}</textarea>
                             @error('content')
                                 <div class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('content') }}</strong>

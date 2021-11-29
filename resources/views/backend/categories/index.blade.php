@@ -34,10 +34,10 @@
                                             <td><span class="badge {{ $category->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $category->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
                                                 <a href="{{ route('backend.categories.edit', ['id' => $category->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('backend.categories.destroy', ['id' => $category->id]) }}" method="post" class="d-inline">
-                                                    @method('delete')
+                                                <form action="{{ route('backend.categories.destroy', ['id' => $category->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin menghapus kategori ini?')">
                                                     @csrf
-                                                    <button class="btn btn-danger btn-sm" onsubmit="return confirm('Delete This User?')"><i class="fas fa-trash-alt"></i></button>
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                                 </form>
                                             </td>
                                         </tr>

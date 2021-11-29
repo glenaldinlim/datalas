@@ -44,7 +44,7 @@
                                                 @if (Auth::user()->id != $user->id)
                                                     @hasrole('webmaster')
                                                         <a href="{{ route('backend.users.edit', ['id' => $user->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                        <form action="{{ route('backend.users.destroy', ['id' => $user->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This User?')">
+                                                        <form action="{{ route('backend.users.destroy', ['id' => $user->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin menghapus pengurus ini?')">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

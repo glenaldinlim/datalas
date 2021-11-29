@@ -37,7 +37,7 @@
                                             <td>
                                                 <a href="{{ route('backend.communities.show', ['id' => $community->id]) }}" class="btn btn-warning text-white btn-sm"> <i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('backend.communities.edit', ['id' => $community->id]) }}" class="btn btn-info text-white btn-sm"> <i class="fas fa-edit"></i></a>
-                                                <form action="{{ route('backend.communities.destroy', ['id' => $community->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete This Community?')">
+                                                <form action="{{ route('backend.communities.destroy', ['id' => $community->id]) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin menghapus komunitas ini?')">
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
