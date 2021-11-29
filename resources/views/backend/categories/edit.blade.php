@@ -41,7 +41,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <input type="submit" value="Update" class="btn btn-success btn-text-size">
+                    <input type="submit" value="Ubah" class="btn btn-success btn-text-size">
                 </div>
             </div>
         </form>

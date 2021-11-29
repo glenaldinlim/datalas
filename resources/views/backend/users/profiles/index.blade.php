@@ -138,7 +138,7 @@
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label for="password" class="form-label label-font">Kata Sandi</label>
-                                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Password" required>
+                                        <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}" placeholder="Kata Sandi" required>
                                         <small class="form-text text-muted">Min. 8 karakter</small>
                                         @error('password')
                                             <div class="invalid-feedback" role="alert">
@@ -148,7 +148,7 @@
                                     </div>
                                     <div class="form-group col-md-6 col-12">
                                         <label for="password_confirmation" class="form-label label-font">Konfirmasi Kata Sandi</label>
-                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Password Confirmation" required>
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control @error('password_confirmation') is-invalid @enderror" placeholder="Konfirmasi Kata Sandi" required>
                                         @error('password_confirmation')
                                             <div class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('password_confirmation') }}</strong>
