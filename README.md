@@ -30,3 +30,14 @@ Datalas a.k.a Data Digital Komoditas is a web app that provide production statis
 | [laravel-permission by spatie](https://spatie.be/docs/laravel-permission/v5/introduction) | ^5.1    |
 | [laravel/ui](https://github.com/laravel/ui)                                               | ^3.3    |
 and many more third party package
+
+## Development Environment
+When develop this web app, I use [Laragon](https://laragon.org/) as my local development tool. The webserver I use is Nginx and dbserver is MySQL.
+
+## How to Use
+1. Clone this repo to your local computer via git command or zip download
+2. Run `composer install` on your cmd or terminal
+3. Copy and rename `.env.example` file to `.env` on root folder
+4. Open the `.env` file and then configure `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` field correspond to your development environment configuration
+5. Run `php artisan migration key:generate`
+6. If you want to use laravel development server, you can run `php artisan serve`
