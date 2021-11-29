@@ -27,13 +27,13 @@
         </div>
         <div class="row d-flex flex-row justify-content-center">
             <div class="col-auto">
-                <a class="text-white" href="#"><i class="fab fa-facebook-f fa-2x"></i></a>
+                <a class="text-white" href="{{ $socialMedia->facebook_url }}"><i class="fab fa-facebook-f fa-2x"></i></a>
             </div>
             <div class="col-auto">
-                <a class="text-white" href="#"><i class="fab fa-twitter fa-2x"></i></a>
+                <a class="text-white" href="{{ $socialMedia->twitter_url }}"><i class="fab fa-twitter fa-2x"></i></a>
             </div>
             <div class="col-auto">
-                <a class="text-white" href="#"><i class="fab fa-instagram fa-2x"></i></a>
+                <a class="text-white" href="{{ $socialMedia->instagram_url }}"><i class="fab fa-instagram fa-2x"></i></a>
             </div>
         </div>
     </div>
