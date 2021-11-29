@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\v1\ProvinceController;
 use App\Http\Controllers\API\v1\ProductionController;
 
 /*
@@ -16,4 +17,7 @@ use App\Http\Controllers\API\v1\ProductionController;
 */
 Route::group(['prefix' => 'v1'], function() {
     Route::get('/productions', [ProductionController::class, 'index']);
+    
+    Route::get('/provinces', [ProvinceController::class, 'index']);
+    Route::get('/provinces/{id}', [ProvinceController::class, 'show']);
 });
