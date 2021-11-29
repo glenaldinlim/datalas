@@ -43,7 +43,7 @@ Route::group(['as' => 'front.'], function() {
         Route::get('/data-produksi', [ProductionController::class, 'index'])->name('production');
         Route::group(['prefix' => 'publications', 'as' => 'publications.'], function() {
             Route::get('/', [PublicationLanding::class, 'index'])->name('index');
-            Route::resource('news', PublicationNewsController::class)->parameters(['mews' => 'slug'])->only(['index', 'show']);
+            Route::resource('news', PublicationNewsController::class)->parameters(['news' => 'slug'])->only(['index', 'show']);
             Route::resource('articles', PublicationArticleController::class)->parameters(['articles' => 'slug'])->only(['index', 'show']);
         });
         Route::group(['as' => 'contact.'], function() {

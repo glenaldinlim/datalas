@@ -60,9 +60,22 @@ class PublicationNewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $slug)
     {
-        return abort(404);
+        $publication = Publication::where('slug', $slug)
+                                    ->firstOrFail();
+
+        UserLog::create([
+            'user_id'       => \Auth::user() != NULL ? \Auth::user()->id : NULL,
+            'description'   => 'telah mengakses halaman berita ('.$publication->slug.')',
+            'ip_address'    => $request->ip(),
+            'browser'       => $request->header('User-Agent'),
+        ]);
+
+        return view('landing.publication.show', [
+            'heroTitle'    => 'Berita',
+            'publication'  => $publication,
+        ]);
     }
 
     /**
