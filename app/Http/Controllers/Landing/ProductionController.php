@@ -17,8 +17,8 @@ class ProductionController extends Controller
             'browser'       => $request->header('User-Agent'),
         ]);
 
-        return view('landing.about.index', [
-            'heroTitle' => 'Tentang'
+        return view('landing.production.index', [
+            'heroTitle' => 'Data Produksi'
         ]);
     }
 }
