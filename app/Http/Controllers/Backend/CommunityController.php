@@ -171,6 +171,8 @@ class CommunityController extends Controller
         try {
             $community = Community::findOrFail($id);
             $community->delete();
+            $user = User::findOrFail($community->user_id);
+            $user->delete();
 
             UserLog::create([
                 'user_id'       => \Auth::user()->id,
