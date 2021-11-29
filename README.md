@@ -1,8 +1,8 @@
-<p align="center"><img src="https://raw.githubusercontent.com/glenaldinlim/misc/main/datalas/brand.png" width="400"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/glenaldinlim/glenaldinlim/master/datalas/brand.png" width="400"></p>
 
 ## About Datalas
 
-Datalas is a web app that provide production statistic of variates commodity in Indoensia. This web app is a final project submission courses (INF304 - Rekayasa Perangkat Lunak & TEK305 - Pemrograman Berbasis Web).
+Datalas a.k.a Data Digital Komoditas is a web app that provide production statistic of variates commodity in Indoensia. This web app is a final project submission courses (INF304 - Rekayasa Perangkat Lunak & TEK305 - Pemrograman Berbasis Web).
 
 ### Team
 - J3D119013 - Ananda Rizky Raihansyah
