@@ -32,7 +32,7 @@
                                         <tr>
                                             <td>{{ $no++ }}</td>
                                             <td>{{ $community->name }}</td>
-                                            <td>{{ $community->origin_id }}, {{ $community->province_id }}</td>
+                                            <td>{{ $community->origin->name }}, {{ $community->province->name }}</td>
                                             <td><span class="badge {{ $community->is_active == 1 ? "badge-success" : "badge-danger"}}">{{ $community->is_active == 1 ? 'Aktif' : 'Tidak Aktif' }}</span></td>
                                             <td>
                                                 <a href="{{ route('backend.communities.show', ['id' => $community->id]) }}" class="btn btn-warning text-white btn-sm"> <i class="fas fa-eye"></i></a>

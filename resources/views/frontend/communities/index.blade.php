@@ -21,7 +21,7 @@
                                 <div class="col-lg-6 col-md-6 col-sm-12 col-12">
                                     <div class="information">
                                         <b>Region</b>
-                                        <p>{{ $community->origin_id }}, {{ $community->province_id }}</p>
+                                        <p>{{ $community->origin->name }}, {{ $community->province->name }}</p>
                                     </div>
                                     <div class="information">
                                         <b>Alamat</b>

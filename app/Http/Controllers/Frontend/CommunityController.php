@@ -16,7 +16,7 @@ class CommunityController extends Controller
      */
     public function index()
     {
-        $community = Community::where('user_id', \Auth::user()->id)->firstOrFail();
+        $community = Community::with(['province', 'origin'])->where('user_id', \Auth::user()->id)->firstOrFail();
 
         return view('frontend.communities.index', [
             'community' => $community

@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="information">
                                         <b>Region</b>
-                                        <p>{{ $community->origin_id }}, {{ $community->province_id }}</p>
+                                        <p>{{ $community->origin->name }}, {{ $community->province->name }}</p>
                                     </div>
                                     <div class="information">
                                         <b>Status</b>

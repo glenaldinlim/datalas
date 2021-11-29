@@ -18,7 +18,7 @@ class CommunityController extends Controller
 
     public function index()
     {
-        $communities = Community::all();
+        $communities = Community::with(['province', 'origin'])->get();
 
         return view('backend.communities.index', [
             'no'            => 1,
@@ -96,7 +96,7 @@ class CommunityController extends Controller
      */
     public function show($id)
     {
-        $community = Community::with('user')->findOrFail($id);
+        $community = Community::with(['user', 'province', 'origin'])->findOrFail($id);
 
         return view('backend.communities.show', [
             'community' => $community,
