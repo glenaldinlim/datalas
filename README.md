@@ -39,5 +39,16 @@ When develop this web app, I use [Laragon](https://laragon.org/) as my local dev
 2. Run `composer install` on your cmd or terminal
 3. Copy and rename `.env.example` file to `.env` on root folder
 4. Open the `.env` file and then configure `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD` field correspond to your development environment configuration
-5. Run `php artisan migration key:generate`
+5. Run `php artisan key:generate` and `php artisan migrate --seed`
 6. If you want to use laravel development server, you can run `php artisan serve`
+7. Don't forget to modify API URL link at some page correspond to your development enviroment URL
+
+### Access Account
+| Email                  | Password | Role      | Scope       |
+| ---------------------- | -------- | --------- | ----------- |
+| cto@datalas.tech       | password | Bod       | Admin Panel |
+| webmaster@datalas.tech | password | Webmaster | Admin Panel |
+| admin@datalas.tech     | password | Admin     | Admin Panel |
+| johndoe@datalas.tech   | password | Community | User Panel  |
+
+When creation administator user, the default password is *d4t4las00*
