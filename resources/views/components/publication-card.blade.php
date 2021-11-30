@@ -7,7 +7,7 @@
                 <a href="{{ $data->type == 'News' ? route('front.landing.publications.news.show', ['slug' => $data->slug]) : route('front.landing.publications.articles.show', ['slug' => $data->slug]) }}" class="font-weight-bold text-dark text-decoration-none">{{ $data->title }}</a>
             </div>
             <p class="m-0"><small class="text-muted">{{ $data->publish_time }}</small></p>
-            <div class="card-text">{{ \Str::limit($data->content, 100, $end='...') }}</div>
+            <div class="card-text">{{ Str::limit(Str::substr($data->content, 23), 100, $end='...') }}</div>
         </div>
     </div>
 </div>

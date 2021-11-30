@@ -18,7 +18,7 @@
 <script>
     $(document).ready(function(){
         $.ajax({
-            url: `http://datalas.test:8080/api/v1/productions`,
+            url: `https://datalas.tech/api/v1/productions`,
             type: 'GET',
             dataType: 'JSON',
             success: (res) => {
